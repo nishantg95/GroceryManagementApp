@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.nishant.managers.ItemManager;
 import com.nishant.services.ItemService;
 import com.nishant.views.ItemView;
 
@@ -142,12 +141,13 @@ public class ItemController {
 
 		ItemView currentItem = this.itemService.findById(id);
 
-		if (currentItem == null) {
-			LOGGER.debug("Item with id " + id + " not found");
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
+		/*
+		 * if (currentItem == null) { LOGGER.debug("Item with id " + id + " not found");
+		 * return new ResponseEntity<>(HttpStatus.NO_CONTENT); }
+		 */
 
 		this.itemService.updateItem(itemView);
+		LOGGER.debug("new update" + itemView);
 		return new ResponseEntity<>(itemView, HttpStatus.OK);
 	}
 
