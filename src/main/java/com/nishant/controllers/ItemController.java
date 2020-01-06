@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.nishant.managers.ItemManager;
+import com.nishant.services.ItemService;
 import com.nishant.views.ItemView;
 
 /***
@@ -36,7 +37,7 @@ public class ItemController {
 	private static final Logger LOGGER = LogManager.getLogger(ItemController.class);
 
 	@Autowired
-	private ItemManager itemManager;
+	private ItemService itemService;
 
 	/***
 	 * <p>
@@ -52,13 +53,13 @@ public class ItemController {
 	public ResponseEntity<Void> createItem(@RequestBody ItemView itemView, UriComponentsBuilder ucBuilder) {
 		LOGGER.debug("Creating Item " + itemView.getName());
 
-		if (this.itemManager.isItemExist(itemView)) {
+		if (this.itemService.isItemExist(itemView)) {
 			LOGGER.debug("A Item with name " + itemView.getName() + " already exist");
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 
 		}
 
-		this.itemManager.saveItem(itemView);
+		this.itemService.saveItem(itemView);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/itemView/{id}").buildAndExpand(itemView.getId()).toUri());
@@ -78,13 +79,13 @@ public class ItemController {
 	public ResponseEntity<ItemView> deleteItem(@PathVariable("id") Integer id) {
 		LOGGER.debug("Fetching & Deleting Item with id " + id);
 
-		ItemView itemView = this.itemManager.findById(id);
+		ItemView itemView = this.itemService.findById(id);
 		if (itemView == null) {
 			LOGGER.debug("Unable to delete. Item with id " + id + " not found");
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 
-		this.itemManager.deleteItemById(id);
+		this.itemService.deleteItemById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -100,7 +101,7 @@ public class ItemController {
 	@RequestMapping(value = "/getItem/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ItemView> getItem(@PathVariable("id") Integer id) {
 		LOGGER.debug("Fetching Item with id " + id);
-		ItemView itemView = this.itemManager.findById(id);
+		ItemView itemView = this.itemService.findById(id);
 		if (itemView == null) {
 			LOGGER.debug("Item with id " + id + " not found");
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -119,7 +120,7 @@ public class ItemController {
 	@RequestMapping(value = "/listAllItems", method = RequestMethod.GET)
 	public ResponseEntity<List<ItemView>> listAllItems(@RequestHeader HttpHeaders header) {
 		LOGGER.debug(header.get(HttpHeaders.USER_AGENT).toString());
-		List<ItemView> items = this.itemManager.findAllItems();
+		List<ItemView> items = this.itemService.findAllItems();
 		LOGGER.debug("fetched " + items.size() + " items.");
 		if (items.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -139,14 +140,14 @@ public class ItemController {
 	public ResponseEntity<ItemView> updateItem(@PathVariable("id") Integer id, @RequestBody ItemView itemView) {
 		LOGGER.debug("Updating Item " + id);
 
-		ItemView currentItem = this.itemManager.findById(id);
+		ItemView currentItem = this.itemService.findById(id);
 
 		if (currentItem == null) {
 			LOGGER.debug("Item with id " + id + " not found");
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 
-		this.itemManager.updateItem(itemView);
+		this.itemService.updateItem(itemView);
 		return new ResponseEntity<>(itemView, HttpStatus.OK);
 	}
 
