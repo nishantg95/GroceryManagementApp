@@ -1,12 +1,13 @@
 package com.nishant.services;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,29 +63,22 @@ public class ItemServiceImpl implements ItemService {
 //		return this.itemDao.saveItem(itemView);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ItemView updateItem(ItemView itemView) {
 
-		Map<String, Integer> params = new HashMap<String, Integer>();
-		params.put("id", itemView.getId());
-		String url = String.join("", REST_SERVICE_URI, "/updateItem/{id}");
-		restTemplate.put(url, itemView, params);
-//		String requestBody = new String();
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-//		headers.setAccept((List<MediaType>) MediaType.APPLICATION_JSON_UTF8);
-//		LOGGER.debug("requestBody: " + requestBody.toString());
-//		HttpEntity<String> entity = new HttpEntity<String>(requestBody, headers);
-//		LOGGER.debug("entity: " + entity.toString());
-//		String url = String.join("", REST_SERVICE_URI, "/updateItem/", itemView.getId().toString());
-//		LOGGER.debug(url);
-//		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
-//		// check the response, e.g. Location header, Status, and body
-//		response.getHeaders().getLocation();
-//		response.getStatusCode();
-//		LOGGER.debug("response: " + response);
-		return new ItemView();
+//		Map<String, Integer> params = new HashMap<String, Integer>();
+//		params.put("id", itemView.getId());
+//		String url = String.join("", REST_SERVICE_URI, "/updateItem/{id}");
+//		restTemplate.put(url, itemView, params);
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(itemView, headers);
+		String url = String.join("", REST_SERVICE_URI, "/updateItem/" + itemView.getId());
+		ResponseEntity<ItemView> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity,
+				ItemView.class);
+		LOGGER.debug("response: " + responseEntity.getStatusCode());
+		itemView = responseEntity.getBody();
+		return itemView;
 	}
 
 }
