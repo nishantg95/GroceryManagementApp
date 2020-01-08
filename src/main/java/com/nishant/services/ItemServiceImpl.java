@@ -25,7 +25,14 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public Integer deleteItemById(Integer id) {
-		return null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(new String(), headers);
+		String url = String.join("", REST_SERVICE_URI, "/deleteItem/" + id);
+		ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, httpEntity,
+				Integer.class);
+		LOGGER.debug("Server status for deletion of item " + id + ": " + responseEntity.getStatusCode());
+		return responseEntity.getBody();
 //		return this.itemDao.deleteItemById(id);
 	}
 
@@ -35,7 +42,7 @@ public class ItemServiceImpl implements ItemService {
 				ItemView[].class);
 		ItemView[] items = response.getBody();
 		List<ItemView> itemsList = Arrays.asList(items);
-		LOGGER.debug("REST GET= " + itemsList.toString());
+		LOGGER.debug("REST GET= fetched " + itemsList.size() + " items");
 		return itemsList;
 	}
 
@@ -59,7 +66,13 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public ItemView saveItem(ItemView itemView) {
-		return null;
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(itemView, new HttpHeaders());
+		String url = String.join("", REST_SERVICE_URI, "/createItem/");
+		ResponseEntity<ItemView> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity,
+				ItemView.class);
+		LOGGER.debug("Server status for creation of item " + itemView.getId() + ": " + responseEntity.getStatusCode());
+		itemView = responseEntity.getBody();
+		return itemView;
 //		return this.itemDao.saveItem(itemView);
 	}
 
@@ -76,7 +89,7 @@ public class ItemServiceImpl implements ItemService {
 		String url = String.join("", REST_SERVICE_URI, "/updateItem/" + itemView.getId());
 		ResponseEntity<ItemView> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity,
 				ItemView.class);
-		LOGGER.debug("response: " + responseEntity.getStatusCode());
+		LOGGER.debug("Server status for update of item " + itemView.getId() + ": " + responseEntity.getStatusCode());
 		itemView = responseEntity.getBody();
 		return itemView;
 	}

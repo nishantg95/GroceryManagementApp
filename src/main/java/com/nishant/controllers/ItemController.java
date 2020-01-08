@@ -49,20 +49,20 @@ public class ItemController {
 	 */
 
 	@RequestMapping(value = "/createItem", method = RequestMethod.POST)
-	public ResponseEntity<Void> createItem(@RequestBody ItemView itemView, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<ItemView> createItem(@RequestBody ItemView itemView, UriComponentsBuilder ucBuilder) {
 		LOGGER.debug("Creating Item " + itemView.getName());
 
-		if (this.itemService.isItemExist(itemView)) {
-			LOGGER.debug("A Item with name " + itemView.getName() + " already exist");
-			return new ResponseEntity<>(HttpStatus.CONFLICT);
-
-		}
+//		if (this.itemService.isItemExist(itemView)) {
+//			LOGGER.debug("A Item with name " + itemView.getName() + " already exist");
+//			return new ResponseEntity<>(HttpStatus.CONFLICT);
+//
+//		}
 
 		this.itemService.saveItem(itemView);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/itemView/{id}").buildAndExpand(itemView.getId()).toUri());
-		return new ResponseEntity<>(headers, HttpStatus.CREATED);
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setLocation(ucBuilder.path("/itemView/{id}").buildAndExpand(itemView.getId()).toUri());
+		return new ResponseEntity<>(itemView, HttpStatus.CREATED);
 	}
 
 	/***
@@ -78,11 +78,11 @@ public class ItemController {
 	public ResponseEntity<ItemView> deleteItem(@PathVariable("id") Integer id) {
 		LOGGER.debug("Fetching & Deleting Item with id " + id);
 
-		ItemView itemView = this.itemService.findById(id);
-		if (itemView == null) {
-			LOGGER.debug("Unable to delete. Item with id " + id + " not found");
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
+//		ItemView itemView = this.itemService.findById(id);
+//		if (itemView == null) {
+//			LOGGER.debug("Unable to delete. Item with id " + id + " not found");
+//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//		}
 
 		this.itemService.deleteItemById(id);
 		return new ResponseEntity<>(HttpStatus.OK);

@@ -20,6 +20,7 @@ import com.nishant.interfaces.ItemInterface;
  * @author nishant.b.grover
  *
  */
+//@JsonSerialize
 public class ItemView implements ItemInterface {
 
 	private Integer id;
