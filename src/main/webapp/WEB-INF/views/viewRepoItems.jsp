@@ -47,7 +47,7 @@
 					</button>
 				</div>
 			</div>
-			<div id=table_repo_items">
+			<div id="table_repo_items">
 				<table data-ng-controller="RepoItemController as ctrl"
 					class="table table-light table-hover .w-auto p-3" id="repo_items">
 					<thead>
@@ -80,7 +80,6 @@
 	<div id="center_button">
 		<button id="backFromAsync"
 			onclick="window.location.href = '../welcome';">Back</button>
-	</div>
 	</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.10/angular.min.js"
