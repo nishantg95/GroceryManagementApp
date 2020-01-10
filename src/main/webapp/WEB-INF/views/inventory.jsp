@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><!--need this for c: tag  -->
-<html>
 
+<html>
 <head>
 <jsp:include page="head.jsp" />
 <script src="https://kit.fontawesome.com/f449710536.js"
@@ -15,13 +15,16 @@
 	<div class="container-fluid"
 		data-ng-controller="ItemController as ctrl">
 		<div class="row justify-content-center p-5">
-			<h3>Items Available</h3>
+			<h3>Nishant's Inventory</h3>
 		</div>
 		<form autocomplete="off" data-ng-submit="ctrl.submit()" id="asyncForm"
 			class="form-inline"></form>
 		<div class="panel">
 			<div class="tablecontainer">
 				<table class="table table-light table-hover .w-auto" id="items">
+					<caption>
+						<h3>Manage Items</h3>
+					</caption>
 					<thead>
 						<tr>
 							<th class="required">Name</th>
@@ -78,7 +81,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr data-ng-repeat="i in ctrl.items" class="animate">
+						<tr class="animation" data-ng-repeat="i in ctrl.items">
 							<td data-ng-bind="i.name"></td>
 							<td data-ng-bind="i.storageState"></td>
 							<td data-ng-bind="i.shelfLife"></td>
@@ -90,8 +93,8 @@
 										class="btn btn-warning">
 										<i class="fas fa-edit"></i>
 									</button>
-									<button type="button" data-ng-click="ctrl.remove(i.id)"
-										class="btn btn-danger">
+									<button type="button" data-toggle="modal" data-ng-click="ctrl.dItem=i"
+										data-target="#deleteConfirmation" class="btn btn-danger">
 										<i class="fas fa-trash"></i>
 									</button>
 								</div>
@@ -105,6 +108,31 @@
 				</div>
 			</div>
 		</div>
+			<!-- Modal alert for deletion -->
+	<div class="modal fade" id="deleteConfirmation" tabindex="-1"
+		role="dialog" aria-labelledby="deleteConfirmation" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteConfirmationTitle">Confirm
+						Deletion</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure you want to delete the following item from your
+						inventory?</p>
+					<p><strong>{{ctrl.dItem.name}}</strong></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="ctrl.remove(ctrl.dItem.id)">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.10/angular.min.js"
@@ -113,6 +141,7 @@
 	</script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular-animate.js">
+		
 	</script>
 
 	<script src="<c:url value='/static/js/app.js' />"
@@ -134,6 +163,7 @@
 	</script>
 	<script src="<c:url value='/static/js/service/repo_item_service.js' />"
 		type="text/javascript">
+		
 	</script>
 
 

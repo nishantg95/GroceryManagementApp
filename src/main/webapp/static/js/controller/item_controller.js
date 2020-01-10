@@ -12,6 +12,7 @@
 		self.item = {id:null, name:'',shelfLife:'', purchaseDate:null, expiryDate:null, storageState:''};
 		self.items = [];
 		self.repoItems = [];
+		self.dItem = null;
 
 		self.submit = submit;
 		self.edit = edit;
