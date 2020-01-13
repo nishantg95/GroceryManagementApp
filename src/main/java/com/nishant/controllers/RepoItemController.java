@@ -51,7 +51,7 @@ public class RepoItemController {
 	@RequestMapping(value = "/listAllRepoItems", method = RequestMethod.GET)
 	public ResponseEntity<List<RepoItemEntity>> listAllRepoItems() {
 		List<RepoItemEntity> repoItems = this.repoItemManager.findAllRepoItems();
-		LOGGER.debug(String.valueOf(repoItems.size()));
+		LOGGER.debug(String.valueOf("Fetched repoitems, counted-" + repoItems.size()));
 		return new ResponseEntity<>(repoItems, HttpStatus.OK);
 	}
 
