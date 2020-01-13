@@ -9,10 +9,6 @@ body {
 	font-size: 13px;
 }
 
-#center_button {
-	text-align: center;
-}
-
 .table caption {
 	caption-side: top;
 	background: #2E6A80;
@@ -20,7 +16,13 @@ body {
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	padding: 15px 15px 15px;
-		
+	position: sticky;
+	top: 0;
+}
+
+.table thead th{
+	position: sticky;
+	top: 70px;
 }
 /************************************ Page speciifc style elements **************************************/
 
@@ -31,7 +33,7 @@ body {
 	margin: 15px auto;
 }
 
-/*addItemForm.jsp */
+/*addRepoItemForm.jsp */
 .required:after {
 	content: " *";
 	color: red
@@ -41,18 +43,24 @@ body {
 	content: "* ";
 	color: red
 }
-/* inventory.jsp */
-#inner {
-	width: 50%;
-	margin: 0 auto;
+/* viewRepoItem.jsp */
+#repo_items {
+	overflow-y: auto;
+	height: 80vh;
 }
+/* inventory.jsp */
 .modal p {
-    word-wrap: break-word;
+	word-wrap: break-word;
 }
 
-table tr{
+table tr {
 	padding-right: 25px;
 	padding-left: 25px
+}
+
+#items {
+	overflow-y: auto;
+	height: 80vh;
 }
 /* Bootstrap style CSS for autocomplete */
 .name-typeahead .dropdown-menu {
@@ -79,4 +87,3 @@ table tr{
 	-moz-border-radius: 0px;
 	background-image: none;
 }
-/*  CSS animations for adding/deleting items */

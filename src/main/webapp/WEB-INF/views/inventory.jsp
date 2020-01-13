@@ -139,11 +139,6 @@
 		type="text/javascript">
 		
 	</script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular-animate.js">
-		
-	</script>
-
 	<script src="<c:url value='/static/js/app.js' />"
 		type="text/javascript">
 		

@@ -8,8 +8,8 @@
 </head>
 
 <body data-ng-app="itemTracker">
-	<div class="jumbotron text-center jumbotron-fluid">
-		<div class="container" data-ng-controller="ItemController as ctrl" data-ng-model="ctrl.items">
+	<div class="jumbotron text-center jumbotron-fluid" data-ng-controller="ItemController as ctrl" >
+		<div class="container" data-ng-model="ctrl.items">
 			<h2>Welcome Back, Nishant!!</h2>
 			<p>You have <span>{{ctrl.items.length}}</span> ingredients in your inventory.</p>
 		</div>
@@ -21,7 +21,7 @@
 			<progress max="100" value="77"></progress>
 		</p>
 	</div>
-	<div id="center_button">
+	<div class="row justify-content-center p-3">
 		<button id="syncPageLink" onclick="window.location.href = 'repo/viewRepoItems';">Admin Panel</button>
 		<button id="asyncPageLink" onclick="window.location.href = 'inventory';">View Inventory</button>
 	</div>
@@ -44,5 +44,6 @@
 		<script src="<c:url value='/static/js/service/repo_item_service.js' />"
 		type="text/javascript">
 	</script>
+	
 </body>
 </html>

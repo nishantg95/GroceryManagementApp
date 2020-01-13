@@ -1,4 +1,4 @@
 'use strict';
 
 angular
-	.module('itemTracker',['ui.bootstrap','ngAnimate']);
+	.module('itemTracker',['ui.bootstrap']);

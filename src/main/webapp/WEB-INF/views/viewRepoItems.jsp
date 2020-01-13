@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<div class="container" data-ng-app="itemTracker">
+	<div class="container-fluid" data-ng-app="itemTracker">
 		<div class="row justify-content-center p-3">
 			<h3>Admin Panel</h3>
 		</div>
@@ -37,50 +37,55 @@
 					</tr>
 				</table>
 			</div>
-			<div class="container">
-				<div class="float-right p-3">
-					<button id="addRepoItem"
-						onclick="window.location.href = 'addRepoItemForm';"
-						class="btn btn-success" data-toggle="tooltip"
-						data-placement="right" title="Add new item to repo">
-						<i class="fas fa-plus"></i>
-					</button>
+			<div class="panel">
+				<div class="tablecontainer p-3">
+					<table data-ng-controller="RepoItemController as ctrl"
+						class="table table-light table-hover table-responsive .w-auto"
+						id="repo_items">
+						<caption>
+							<div class="row">
+								<div class="col col-xs-8 text-left">
+									<h3>Manage Repo Items</h3>
+								</div>
+								<div class="col col-xs-8 text-right">
+									<button id="addRepoItem"
+										onclick="window.location.href = 'addRepoItemForm';"
+										class="btn btn-success" data-toggle="tooltip"
+										data-placement="right" title="Add new item to repo">
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
+							</div>
+						</caption>
+						<thead>
+							<tr class="table-info">
+								<th>ID</th>
+								<th>Name</th>
+								<th>Fridge Longevity</th>
+								<th>Freezer Longevity</th>
+								<th>Pantry Longevity</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="i in ctrl.repoItems">
+								<td data-ng-bind="i.rId"></td>
+								<td data-ng-bind="i.rName"></td>
+								<td data-ng-bind="i.rFridgeDate"></td>
+								<td data-ng-bind="i.rFreezeDate"></td>
+								<td data-ng-bind="i.rPantryDate"></td>
+							</tr>
+
+						</tbody>
+					</table>
 				</div>
 			</div>
-			<div id="table_repo_items">
-				<table data-ng-controller="RepoItemController as ctrl"
-					class="table table-light table-hover .w-auto p-3" id="repo_items">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Fridge Longevity</th>
-							<th>Freezer Longevity</th>
-							<th>Pantry Longevity</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr data-ng-repeat="i in ctrl.repoItems">
-							<td data-ng-bind="i.rId"></td>
-							<td data-ng-bind="i.rName"></td>
-							<td data-ng-bind="i.rFridgeDate"></td>
-							<td data-ng-bind="i.rFreezeDate"></td>
-							<td data-ng-bind="i.rPantryDate"></td>
-						</tr>
-
-					</tbody>
-				</table>
-			</div>
+		</div>
+		<div class="row justify-content-center p-3">
+			<button id="backFromAsync"
+				onclick="window.location.href = '../welcome';">Back</button>
 		</div>
 	</div>
 
-
-	<br>
-	<br>
-	<div id="center_button">
-		<button id="backFromAsync"
-			onclick="window.location.href = '../welcome';">Back</button>
-	</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.10/angular.min.js"
 		type="text/javascript">
