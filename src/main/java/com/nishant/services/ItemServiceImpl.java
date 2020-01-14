@@ -49,24 +49,6 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public ItemView findById(Integer id) {
-		return null;
-//		return this.itemDao.findById(id);
-	}
-
-	@Override
-	public ItemView findByName(String name) {
-		return null;
-//		return this.itemDao.findByName(name);
-	}
-
-	@Override
-	public Boolean isItemExist(ItemView itemView) {
-		return null;
-//		return this.itemDao.isItemExist(itemView);
-	}
-
-	@Override
 	public ItemView saveItem(ItemView itemView) {
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(itemView, new HttpHeaders());
 		String url = String.join("", REST_SERVICE_URI, "/createItem/");
@@ -75,7 +57,6 @@ public class ItemServiceImpl implements ItemService {
 		LOGGER.debug("Server status for creation of item " + itemView.getId() + ": " + responseEntity.getStatusCode());
 		itemView = responseEntity.getBody();
 		return itemView;
-//		return this.itemDao.saveItem(itemView);
 	}
 
 	@Override

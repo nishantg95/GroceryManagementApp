@@ -10,12 +10,6 @@ public interface ItemManager {
 
 	List<ItemView> findAllItems();
 
-	ItemView findById(Integer id);
-
-	ItemView findByName(String name);
-
-	public Boolean isItemExist(ItemView item);
-
 	void saveItem(ItemView item);
 
 	void updateItem(ItemView item);

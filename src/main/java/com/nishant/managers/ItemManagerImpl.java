@@ -32,23 +32,6 @@ public class ItemManagerImpl implements ItemManager {
 	}
 
 	@Override
-	public ItemView findById(Integer id) {
-		ItemView itemView = this.itemService.findById(id);
-		return itemView;
-	}
-
-	@Override
-	public ItemView findByName(String name) {
-		ItemView itemView = this.itemService.findByName(name);
-		return itemView;
-	}
-
-	@Override
-	public Boolean isItemExist(ItemView item) {
-		return this.itemService.isItemExist(item);
-	}
-
-	@Override
 	public void saveItem(ItemView item) {
 		item = this.itemService.saveItem(item);
 		if (item.getId() != null) {
