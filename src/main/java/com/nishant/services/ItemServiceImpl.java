@@ -1,10 +1,10 @@
 package com.nishant.services;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,17 +33,19 @@ public class ItemServiceImpl implements ItemService {
 				Integer.class);
 		LOGGER.debug("Server status for deletion of item " + id + ": " + responseEntity.getStatusCode());
 		return responseEntity.getBody();
-//		return this.itemDao.deleteItemById(id);
 	}
 
 	@Override
 	public List<ItemView> findAllItems() {
-		ResponseEntity<ItemView[]> response = restTemplate.getForEntity(REST_SERVICE_URI + "/listAllItems",
-				ItemView[].class);
-		ItemView[] items = response.getBody();
-		List<ItemView> itemsList = Arrays.asList(items);
-		LOGGER.debug("REST GET= fetched " + itemsList.size() + " items");
-		return itemsList;
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(new String(), headers);
+		String url = String.join("", REST_SERVICE_URI, "/listAllItems");
+		ResponseEntity<List<ItemView>> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity,
+				new ParameterizedTypeReference<List<ItemView>>() {
+				});
+		List<ItemView> items = response.getBody();
+		return items;
 	}
 
 	@Override
@@ -79,10 +81,6 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public ItemView updateItem(ItemView itemView) {
 
-//		Map<String, Integer> params = new HashMap<String, Integer>();
-//		params.put("id", itemView.getId());
-//		String url = String.join("", REST_SERVICE_URI, "/updateItem/{id}");
-//		restTemplate.put(url, itemView, params);
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content-Type", "application/json");
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(itemView, headers);
