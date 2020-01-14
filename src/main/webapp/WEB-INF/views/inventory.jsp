@@ -41,7 +41,7 @@
 										class="form-control input-sm" placeholder="Item name"
 										form="asyncForm" data-ng-required="true"
 										uib-typeahead="rItem as rItem.rName for rItem in ctrl.repoItems | filter:$viewValue | limitTo:10"
-										typeahead-on-select="ctrl.test($item, ctrl.item, $label, $event)" />
+										typeahead-on-select="ctrl.autofill($item, ctrl.item, $label, $event)" />
 								</div>
 							</th>
 							<th><select name="storage_state" class="form-control"
@@ -81,7 +81,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="animation" data-ng-repeat="i in ctrl.items">
+						<tr class="animation" data-ng-repeat="i in ctrl.items" id="item_{{$index}}">
 							<td data-ng-bind="i.name"></td>
 							<td data-ng-bind="i.storageState"></td>
 							<td data-ng-bind="i.shelfLife"></td>

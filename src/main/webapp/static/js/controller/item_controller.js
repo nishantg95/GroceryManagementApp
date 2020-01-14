@@ -18,7 +18,7 @@
 		self.edit = edit;
 		self.remove = remove;
 		self.reset = reset;
-		self.test = test;
+		self.autofill = autofill;
 
 		fetchAllItems();
 		fetchAllRepoItems();
@@ -106,7 +106,7 @@
 		function reset(){
 			self.item={id:null, name:'',shelfLife:'', purchaseDate:null, expiryDate:null, storageState:''};
 		}
-		function test($item, $model, $label, $event){
+		function autofill($item, $model, $label, $event){
 			$log.log("item=",$item, "model=",$model, "label=",$label, "event=",$event);
 			$model.name = $item.rName;
 			$model.shelfLife = $item.rFridgeDate;
