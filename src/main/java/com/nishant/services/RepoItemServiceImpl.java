@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import com.nishant.daos.RepoItemDao;
-import com.nishant.entities.RepoItemEntity;
+import com.nishant.entities.RepoItemView;
 
 /**
  * @author nishant.b.grover
@@ -31,21 +30,26 @@ public class RepoItemServiceImpl implements RepoItemService {
 	private static RestTemplate restTemplate = new RestTemplate();
 	private static final Logger LOGGER = LogManager.getLogger(RepoItemServiceImpl.class);
 
-	@Autowired
-	private RepoItemDao repoItemDao;
-
 	@Override
-	public List<RepoItemEntity> findAllRepoItems() {
-		return this.repoItemDao.findAllRepoItems();
+	public List<RepoItemView> findAllRepoItems() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(new String(), headers);
+		String url = String.join("", REST_SERVICE_URI, "/listAllRepoItems");
+		ResponseEntity<List<RepoItemView>> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity,
+				new ParameterizedTypeReference<List<RepoItemView>>() {
+				});
+		List<RepoItemView> repoItems = response.getBody();
+		return repoItems;
 	}
 
 	@Override
-	public RepoItemEntity saveRepoItem(RepoItemEntity repoItem) {
+	public RepoItemView saveRepoItem(RepoItemView repoItem) {
 
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(repoItem, new HttpHeaders());
 		String url = String.join("", REST_SERVICE_URI, "/addRepoItem/");
-		ResponseEntity<RepoItemEntity> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity,
-				RepoItemEntity.class);
+		ResponseEntity<RepoItemView> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity,
+				RepoItemView.class);
 		LOGGER.debug("Server status for creation of item " + repoItem.getrId() + ": " + responseEntity.getStatusCode());
 		repoItem = responseEntity.getBody();
 		return repoItem;
