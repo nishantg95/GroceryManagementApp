@@ -64,13 +64,6 @@ public class ItemController {
 	@RequestMapping(value = "/deleteItem/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ItemView> deleteItem(@PathVariable("id") Integer id) {
 		LOGGER.debug("Fetching & Deleting Item with id " + id);
-
-//		ItemView itemView = this.itemService.findById(id);
-//		if (itemView == null) {
-//			LOGGER.debug("Unable to delete. Item with id " + id + " not found");
-//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//		}
-
 		this.itemManager.deleteItemById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

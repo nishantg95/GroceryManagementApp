@@ -5,7 +5,7 @@ package com.nishant.services;
 
 import java.util.List;
 
-import com.nishant.entities.RepoItemEntity;
+import com.nishant.views.RepoItemView;
 
 /**
  * @author nishant.b.grover
@@ -13,12 +13,12 @@ import com.nishant.entities.RepoItemEntity;
  */
 public interface RepoItemService {
 
-	List<RepoItemEntity> findAllRepoItems();
+	List<RepoItemView> findAllRepoItems();
 
 	/**
 	 * @param repoItem
 	 * @return
 	 */
-	RepoItemEntity saveRepoItem(RepoItemEntity repoItem);
+	RepoItemView saveRepoItem(RepoItemView repoItem);
 
 }

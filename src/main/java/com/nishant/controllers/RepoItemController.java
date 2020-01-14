@@ -20,8 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.nishant.entities.RepoItemEntity;
 import com.nishant.managers.RepoItemManager;
+import com.nishant.views.RepoItemView;
 
 /**
  * @author nishant.b.grover
@@ -45,18 +45,18 @@ public class RepoItemController {
 	 */
 	@RequestMapping(value = "/addRepoItemForm", method = RequestMethod.GET)
 	public ModelAndView addRepoItemForm() {
-		return new ModelAndView("addRepoItemForm", "repoItem", new RepoItemEntity());
+		return new ModelAndView("addRepoItemForm", "repoItem", new RepoItemView());
 	}
 
 	@RequestMapping(value = "/listAllRepoItems", method = RequestMethod.GET)
-	public ResponseEntity<List<RepoItemEntity>> listAllRepoItems() {
-		List<RepoItemEntity> repoItems = this.repoItemManager.findAllRepoItems();
+	public ResponseEntity<List<RepoItemView>> listAllRepoItems() {
+		List<RepoItemView> repoItems = this.repoItemManager.findAllRepoItems();
 		LOGGER.debug(String.valueOf("Fetched repoitems, counted-" + repoItems.size()));
 		return new ResponseEntity<>(repoItems, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/viewRepoItems", method = RequestMethod.GET)
-	public ModelAndView viewRepoItems(@ModelAttribute("repoItem") RepoItemEntity repoItem) {
+	public ModelAndView viewRepoItems(@ModelAttribute("repoItem") RepoItemView repoItem) {
 		return new ModelAndView("viewRepoItems", "repoItem", repoItem);
 	}
 
@@ -72,7 +72,7 @@ public class RepoItemController {
 	 */
 
 	@RequestMapping(value = "/viewRepoItems", method = RequestMethod.POST)
-	public RedirectView viewRepoItems(@Valid @ModelAttribute("repoItem") RepoItemEntity repoItem,
+	public RedirectView viewRepoItems(@Valid @ModelAttribute("repoItem") RepoItemView repoItem,
 			RedirectAttributes attributes) {
 		this.repoItemManager.saveItem(repoItem);
 		attributes.addFlashAttribute("repoItem", repoItem);

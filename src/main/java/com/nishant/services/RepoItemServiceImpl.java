@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import com.nishant.entities.RepoItemView;
+import com.nishant.views.RepoItemView;
 
 /**
  * @author nishant.b.grover

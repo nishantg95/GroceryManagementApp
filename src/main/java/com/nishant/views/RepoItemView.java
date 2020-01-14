@@ -1,14 +1,7 @@
 /**
  *
  */
-package com.nishant.entities;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package com.nishant.views;
 
 import com.nishant.interfaces.RepoItemsInterface;
 
@@ -16,24 +9,17 @@ import com.nishant.interfaces.RepoItemsInterface;
  * @author nishant.b.grover
  *
  */
-@Entity
-@Table(name = "REPO_ITEMS")
-public class RepoItemEntity implements RepoItemsInterface {
-	@Id
-	@Column(name = "R_ITEM_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class RepoItemView implements RepoItemsInterface {
+
 	private Integer rId;
 
-	@Column(name = "R_ITEM_NAME", nullable = false)
 	private String rName;
 
-	@Column(name = "R_REFIGERATE_DATE")
 	private String rFridgeDate;
 
-	@Column(name = "R_PANTRY_DATE", nullable = false)
 	private String rPantryDate;
 
-	@Column(name = "R_FREEZE_DATE", nullable = false)
 	private String rFreezeDate;
 
 	@Override
@@ -89,7 +75,7 @@ public class RepoItemEntity implements RepoItemsInterface {
 
 	@Override
 	public String toString() {
-		return "RepoItemEntity [rId=" + this.rId + ", rName=" + this.rName + ", rFridgeDate=" + this.rFridgeDate
+		return "RepoItemView [rId=" + this.rId + ", rName=" + this.rName + ", rFridgeDate=" + this.rFridgeDate
 				+ ", rPantryDate=" + this.rPantryDate + ", rFreezeDate=" + this.rFreezeDate + "]";
 	}
 }

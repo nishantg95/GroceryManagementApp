@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<div class="row justify-content-center p-3">
-			<button id="backFromAsync"
+			<button class="btn btn-light" id="backFromAsync"
 				onclick="window.location.href = '../welcome';">Back</button>
 		</div>
 	</div>

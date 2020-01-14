@@ -10,8 +10,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nishant.entities.RepoItemEntity;
 import com.nishant.services.RepoItemService;
+import com.nishant.views.RepoItemView;
 
 /**
  * @author nishant.b.grover
@@ -25,12 +25,12 @@ public class RepoItemManagerImpl implements RepoItemManager {
 	private RepoItemService repoItemService;
 
 	@Override
-	public List<RepoItemEntity> findAllRepoItems() {
+	public List<RepoItemView> findAllRepoItems() {
 		return this.repoItemService.findAllRepoItems();
 	}
 
 	@Override
-	public void saveItem(RepoItemEntity repoItem) {
+	public void saveItem(RepoItemView repoItem) {
 		this.repoItemService.saveRepoItem(repoItem);
 		if (repoItem.getrId() != null) {
 			LOGGER.debug("Following Item was saved successfully" + repoItem);

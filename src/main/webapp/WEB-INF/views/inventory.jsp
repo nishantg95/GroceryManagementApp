@@ -7,8 +7,6 @@
 <jsp:include page="head.jsp" />
 <script src="https://kit.fontawesome.com/f449710536.js"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css" />
 </head>
 
 <body data-ng-app="itemTracker">
@@ -32,7 +30,7 @@
 							<th>Longevity</th>
 							<th class="required">Purchase Date</th>
 							<th>Expiry Date</th>
-							<th></th>
+							<th>Actions</th>
 						</tr>
 						<tr class="table-info">
 							<th>
@@ -81,7 +79,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="animation" data-ng-repeat="i in ctrl.items" id="item_{{$index}}">
+						<tr class="animation" data-ng-repeat="i in ctrl.items"
+							id="item_{{$index}}">
 							<td data-ng-bind="i.name"></td>
 							<td data-ng-bind="i.storageState"></td>
 							<td data-ng-bind="i.shelfLife"></td>
@@ -93,8 +92,9 @@
 										class="btn btn-warning">
 										<i class="fas fa-edit"></i>
 									</button>
-									<button type="button" data-toggle="modal" data-ng-click="ctrl.dItem=i"
-										data-target="#deleteConfirmation" class="btn btn-danger">
+									<button type="button" data-toggle="modal"
+										data-ng-click="ctrl.dItem=i" data-target="#deleteConfirmation"
+										class="btn btn-danger">
 										<i class="fas fa-trash"></i>
 									</button>
 								</div>
@@ -103,36 +103,39 @@
 					</tbody>
 				</table>
 				<div class="row justify-content-center p-3">
-					<button id="backFromAsync"
+					<button id="backFromAsync" class="btn btn-light"
 						onclick="window.location.href = 'welcome';">Back</button>
 				</div>
 			</div>
 		</div>
-			<!-- Modal alert for deletion -->
-	<div class="modal fade" id="deleteConfirmation" tabindex="-1"
-		role="dialog" aria-labelledby="deleteConfirmation" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="deleteConfirmationTitle">Confirm
-						Deletion</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure you want to delete the following item from your
-						inventory?</p>
-					<p><strong>{{ctrl.dItem.name}}</strong></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="ctrl.remove(ctrl.dItem.id)">Yes</button>
+		<!-- Modal alert for deletion -->
+		<div class="modal fade" id="deleteConfirmation" tabindex="-1"
+			role="dialog" aria-labelledby="deleteConfirmation" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="deleteConfirmationTitle">Confirm
+							Deletion</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure you want to delete the following item from
+							your inventory?</p>
+						<p>
+							<strong>{{ctrl.dItem.name}}</strong>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							data-ng-click="ctrl.remove(ctrl.dItem.id)">Yes</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.10/angular.min.js"

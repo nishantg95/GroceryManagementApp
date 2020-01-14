@@ -5,10 +5,7 @@ package com.nishant.views;
 
 import java.util.Date;
 
-import org.springframework.beans.BeanUtils;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.nishant.entities.ItemEntity;
 import com.nishant.interfaces.ItemInterface;
 
 /**
@@ -43,16 +40,7 @@ public class ItemView implements ItemInterface {
 	 *
 	 */
 	public ItemView() {
-		super();
 		// Default Constructor
-	}
-
-	/**
-	 * This Constructor initializes itemView with the bean type ItemEntity (passed
-	 * as a parameter)
-	 */
-	public ItemView(ItemEntity itemEntity) {
-		BeanUtils.copyProperties(itemEntity, this, ItemInterface.class);
 	}
 
 	@Override
