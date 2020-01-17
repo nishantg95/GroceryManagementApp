@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.nishant.managers.ItemManager;
 import com.nishant.views.ItemView;
@@ -46,8 +45,8 @@ public class ItemController {
 	 */
 
 	@RequestMapping(value = "/createItem", method = RequestMethod.POST)
-	public ResponseEntity<ItemView> createItem(@RequestBody ItemView itemView, UriComponentsBuilder ucBuilder) {
-		LOGGER.debug("Creating Item " + itemView.getName());
+	public ResponseEntity<ItemView> createItem(@RequestBody ItemView itemView) {
+		LOGGER.debug("Creating Item {}", itemView.getName());
 		this.itemManager.saveItem(itemView);
 		return new ResponseEntity<>(itemView, HttpStatus.CREATED);
 	}
@@ -63,7 +62,7 @@ public class ItemController {
 	 */
 	@RequestMapping(value = "/deleteItem/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<ItemView> deleteItem(@PathVariable("id") Integer id) {
-		LOGGER.debug("Fetching & Deleting Item with id " + id);
+		LOGGER.debug("Fetching & Deleting Item with id {}", id);
 		this.itemManager.deleteItemById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -79,7 +78,7 @@ public class ItemController {
 	@RequestMapping(value = "/listAllItems", method = RequestMethod.GET)
 	public ResponseEntity<List<ItemView>> listAllItems() {
 		List<ItemView> items = this.itemManager.findAllItems();
-		LOGGER.debug("fetched " + items.size() + " items.");
+		LOGGER.debug("Fetched {} items", items.size());
 		if (items.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -96,9 +95,9 @@ public class ItemController {
 	 */
 	@RequestMapping(value = "/updateItem/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<ItemView> updateItem(@PathVariable("id") Integer id, @RequestBody ItemView itemView) {
-		LOGGER.debug("Updating Item " + id);
+		LOGGER.debug("Updating the following item {} ", itemView.toString());
 		this.itemManager.updateItem(itemView);
-		LOGGER.debug("new update" + itemView);
+		LOGGER.debug("Updated item: {}" + itemView);
 		return new ResponseEntity<>(itemView, HttpStatus.OK);
 	}
 

@@ -31,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
 		String url = String.join("", REST_SERVICE_URI, "/deleteItem/" + id);
 		ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, httpEntity,
 				Integer.class);
-		LOGGER.debug("Server status for deletion of item " + id + ": " + responseEntity.getStatusCode());
+		LOGGER.debug("Server status: {} for deletion of item: {} ", responseEntity.getStatusCode(), id);
 		return responseEntity.getBody();
 	}
 
@@ -45,6 +45,7 @@ public class ItemServiceImpl implements ItemService {
 				new ParameterizedTypeReference<List<ItemView>>() {
 				});
 		List<ItemView> items = response.getBody();
+		LOGGER.debug("Server status: {} for fetching {} items", response.getStatusCode(), items.size());
 		return items;
 	}
 
@@ -54,7 +55,7 @@ public class ItemServiceImpl implements ItemService {
 		String url = String.join("", REST_SERVICE_URI, "/createItem/");
 		ResponseEntity<ItemView> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity,
 				ItemView.class);
-		LOGGER.debug("Server status for creation of item " + itemView.getId() + ": " + responseEntity.getStatusCode());
+		LOGGER.debug("Server status: {} for creation of item: {}", responseEntity.getStatusCode(), itemView.toString());
 		itemView = responseEntity.getBody();
 		return itemView;
 	}
@@ -68,7 +69,7 @@ public class ItemServiceImpl implements ItemService {
 		String url = String.join("", REST_SERVICE_URI, "/updateItem/" + itemView.getId());
 		ResponseEntity<ItemView> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity,
 				ItemView.class);
-		LOGGER.debug("Server status for update of item " + itemView.getId() + ": " + responseEntity.getStatusCode());
+		LOGGER.debug("Server status: {} for update of item: {}", responseEntity.getStatusCode(), itemView.toString());
 		itemView = responseEntity.getBody();
 		return itemView;
 	}

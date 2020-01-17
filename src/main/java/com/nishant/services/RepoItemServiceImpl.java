@@ -40,6 +40,7 @@ public class RepoItemServiceImpl implements RepoItemService {
 				new ParameterizedTypeReference<List<RepoItemView>>() {
 				});
 		List<RepoItemView> repoItems = response.getBody();
+		LOGGER.debug("Server status: {} for fetching {} repoItems", response.getStatusCode(), repoItems.size());
 		return repoItems;
 	}
 
@@ -50,7 +51,8 @@ public class RepoItemServiceImpl implements RepoItemService {
 		String url = String.join("", REST_SERVICE_URI, "/addRepoItem/");
 		ResponseEntity<RepoItemView> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity,
 				RepoItemView.class);
-		LOGGER.debug("Server status for creation of item " + repoItem.getrId() + ": " + responseEntity.getStatusCode());
+		LOGGER.debug("Server status: {} for creation of repo item : {}", responseEntity.getStatusCode(),
+				repoItem.toString());
 		repoItem = responseEntity.getBody();
 		return repoItem;
 	}

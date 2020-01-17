@@ -21,13 +21,13 @@ public class ItemManagerImpl implements ItemManager {
 	@Override
 	public void deleteItemById(Integer id) {
 		Integer deletedCountManager = this.itemService.deleteItemById(id);
-		LOGGER.debug("Number of items deleted successfully = " + deletedCountManager);
+		LOGGER.debug("Deleted {} item(s) successfully", deletedCountManager);
 	}
 
 	@Override
 	public List<ItemView> findAllItems() {
 		List<ItemView> itemViewList = this.itemService.findAllItems();
-		LOGGER.debug("Returning all items fetched");
+		LOGGER.debug("Returning {} items fetched", itemViewList.size());
 		return itemViewList;
 	}
 
@@ -35,9 +35,9 @@ public class ItemManagerImpl implements ItemManager {
 	public void saveItem(ItemView item) {
 		item = this.itemService.saveItem(item);
 		if (item.getId() != null) {
-			LOGGER.debug("Following Item was saved successfully" + item);
+			LOGGER.debug("Following Item was saved successfully: {}", item);
 		} else {
-			LOGGER.debug("Following Item saved failed" + item);
+			LOGGER.debug("Following Item saved failed: {}" + item);
 		}
 
 	}
