@@ -25,7 +25,7 @@ public class ItemManagerImpl implements ItemManager {
 	@Override
 	public Integer deleteItemById(Integer id) {
 		Integer deletedCountManager = this.itemService.deleteItemById(id);
-		LOGGER.debug("Number of items deleted successfully = " + deletedCountManager);
+		LOGGER.debug("{} item(s) deleted successfully = " + deletedCountManager);
 		return deletedCountManager;
 	}
 
@@ -37,7 +37,6 @@ public class ItemManagerImpl implements ItemManager {
 			ItemView itemView = new ItemView(itemEntity);
 			itemViewList.add(itemView);
 		}
-		LOGGER.debug("Returning all items fetched");
 		return itemViewList;
 	}
 
@@ -66,9 +65,9 @@ public class ItemManagerImpl implements ItemManager {
 		ItemEntity itemEntity = new ItemEntity(item);
 		itemEntity = this.itemService.saveItem(itemEntity);
 		if (itemEntity.getId() != null) {
-			LOGGER.debug("Following Item was saved successfully" + item);
+			LOGGER.debug("Following Item was saved successfully: {}", item.toString());
 		} else {
-			LOGGER.debug("Following Item saved failed" + item);
+			LOGGER.debug("Following Item save failed: {}", item.toString());
 		}
 		BeanUtils.copyProperties(itemEntity, item, ItemInterface.class);
 		return item;
@@ -78,12 +77,6 @@ public class ItemManagerImpl implements ItemManager {
 	public void updateItem(ItemView item) {
 		ItemEntity itemEntity = new ItemEntity(item);
 		itemEntity = this.itemService.updateItem(itemEntity);
-		if (!itemEntity.equals(item)) {
-			LOGGER.debug("Following Item update failed" + item + "; updatedItem recieved " + itemEntity);
-		} else {
-			LOGGER.debug("Following Item was updated successfully" + item + " to " + itemEntity);
-		}
-
 	}
 
 }

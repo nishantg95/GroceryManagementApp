@@ -33,9 +33,9 @@ public class RepoItemManagerImpl implements RepoItemManager {
 	public RepoItemEntity saveItem(RepoItemEntity repoItem) {
 		this.repoItemService.saveRepoItem(repoItem);
 		if (repoItem.getrId() != null) {
-			LOGGER.debug("Following Item was saved successfully" + repoItem);
+			LOGGER.debug("Following item was saved successfully: {}", repoItem.toString());
 		} else {
-			LOGGER.debug("Following Item saved failed" + repoItem);
+			LOGGER.debug("Following item save failed: {}", repoItem.toString());
 		}
 
 		return repoItem;

@@ -5,12 +5,10 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,16 +46,13 @@ public class ItemController {
 
 	@RequestMapping(value = "/createItem", method = RequestMethod.POST)
 	public ResponseEntity<ItemView> createItem(@RequestBody ItemView itemView) {
-		LOGGER.debug("Creating Item " + itemView.getName());
+		LOGGER.debug("Creating Item: {}", itemView.getName());
 
 		if (this.itemManager.isItemExist(itemView)) {
-			LOGGER.debug("A Item with name " + itemView.getName() + " already exist");
+			LOGGER.debug("An item with name {} already exists", itemView.getName());
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
-
 		}
-
 		itemView = this.itemManager.saveItem(itemView);
-
 		return new ResponseEntity<>(itemView, HttpStatus.CREATED);
 	}
 
@@ -72,16 +67,16 @@ public class ItemController {
 	 */
 	@RequestMapping(value = "/deleteItem/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Integer> deleteItem(@PathVariable("id") Integer id) {
-		LOGGER.debug("Fetching & Deleting Item with id " + id);
+		LOGGER.debug("Fetching & Deleting Item with id: {} ", id);
 
 		ItemView itemView = this.itemManager.findById(id);
 		if (itemView == null) {
-			LOGGER.debug("Unable to delete. Item with id " + id + " not found");
+			LOGGER.debug("Failed to delete- Could not find item with id:{}", id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 
 		Integer deletedCountInteger = this.itemManager.deleteItemById(id);
-		LOGGER.debug("Number of Ztems deleted :" + deletedCountInteger);
+		LOGGER.debug("Number of Items deleted :{}", deletedCountInteger);
 		return new ResponseEntity<>(deletedCountInteger, HttpStatus.OK);
 	}
 
@@ -94,10 +89,9 @@ public class ItemController {
 	 * @return
 	 */
 	@RequestMapping(value = "/listAllItems", method = RequestMethod.GET)
-	public ResponseEntity<List<ItemView>> listAllItems(@RequestHeader HttpHeaders header) {
-		LOGGER.debug(header.get(HttpHeaders.USER_AGENT).toString());
+	public ResponseEntity<List<ItemView>> listAllItems() {
 		List<ItemView> items = this.itemManager.findAllItems();
-		LOGGER.debug("fetched " + items.size() + " items.");
+		LOGGER.debug("Fetched {} item(s)!", items.size());
 		if (items.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -114,15 +108,11 @@ public class ItemController {
 	 */
 	@RequestMapping(value = "/updateItem/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<ItemView> updateItem(@PathVariable("id") Integer id, @RequestBody ItemView itemView) {
-		LOGGER.debug("Updating Item " + id);
-
 		ItemView currentItem = this.itemManager.findById(id);
-
 		if (currentItem == null) {
-			LOGGER.debug("Item with id " + id + " not found");
+			LOGGER.debug("Update- Item with id {} not found", id);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-
 		this.itemManager.updateItem(itemView);
 		return new ResponseEntity<>(itemView, HttpStatus.OK);
 	}
