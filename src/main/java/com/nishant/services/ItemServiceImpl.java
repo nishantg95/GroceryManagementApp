@@ -1,6 +1,7 @@
 package com.nishant.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,11 +24,21 @@ public class ItemServiceImpl implements ItemService {
 	private static final String REST_SERVICE_URI = "http://localhost:8080/GroceryManagementApp/data";
 	private static final Logger LOGGER = LogManager.getLogger(ItemServiceImpl.class);
 
+	public HttpEntity<?> createHttpEntity(Optional<ItemView> body) {
+		HttpHeaders newHeaders = new HttpHeaders();
+		newHeaders.set("Content-Type", "application/json");
+		if (body.isPresent()) {
+			HttpEntity<?> httpEntity = new HttpEntity<Object>(body.get(), newHeaders);
+			return httpEntity;
+		} else {
+			HttpEntity<?> httpEntity = new HttpEntity<Object>(new String(), newHeaders);
+			return httpEntity;
+		}
+	}
+
 	@Override
 	public Integer deleteItemById(Integer id) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Type", "application/json");
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(new String(), headers);
+		HttpEntity<?> httpEntity = createHttpEntity(Optional.of(new ItemView()));
 		String url = String.join("", REST_SERVICE_URI, "/deleteItem/" + id);
 		ResponseEntity<Integer> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, httpEntity,
 				Integer.class);
@@ -37,9 +48,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<ItemView> findAllItems() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Type", "application/json");
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(new String(), headers);
+		HttpEntity<?> httpEntity = createHttpEntity(Optional.of(new ItemView()));
 		String url = String.join("", REST_SERVICE_URI, "/listAllItems");
 		ResponseEntity<List<ItemView>> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity,
 				new ParameterizedTypeReference<List<ItemView>>() {
@@ -51,7 +60,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public ItemView saveItem(ItemView itemView) {
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(itemView, new HttpHeaders());
+		HttpEntity<?> httpEntity = createHttpEntity(Optional.of(itemView));
 		String url = String.join("", REST_SERVICE_URI, "/createItem/");
 		ResponseEntity<ItemView> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity,
 				ItemView.class);
@@ -62,10 +71,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public ItemView updateItem(ItemView itemView) {
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Type", "application/json");
-		HttpEntity<?> httpEntity = new HttpEntity<Object>(itemView, headers);
+		HttpEntity<?> httpEntity = createHttpEntity(Optional.of(itemView));
 		String url = String.join("", REST_SERVICE_URI, "/updateItem/" + itemView.getId());
 		ResponseEntity<ItemView> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, httpEntity,
 				ItemView.class);
