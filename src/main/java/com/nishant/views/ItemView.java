@@ -26,7 +26,7 @@ public class ItemView implements ItemInterface {
 
 	private String name;
 
-	private String shelfLife;
+	private String longevity;
 
 	private String storageState;
 
@@ -37,6 +37,12 @@ public class ItemView implements ItemInterface {
 
 	@JsonFormat(pattern = "MM-dd-yyyy", timezone = "CST")
 	private Date expiryDate;
+
+	private String refrigerateDateString;
+
+	private String pantyrDateString;
+
+	private String freezerDateString;
 
 	/**
 	 *
@@ -60,8 +66,18 @@ public class ItemView implements ItemInterface {
 	}
 
 	@Override
+	public String getFreezerDateString() {
+		return this.freezerDateString;
+	}
+
+	@Override
 	public Integer getId() {
 		return this.id;
+	}
+
+	@Override
+	public String getLongevity() {
+		return this.longevity;
 	}
 
 	@Override
@@ -70,13 +86,18 @@ public class ItemView implements ItemInterface {
 	}
 
 	@Override
+	public String getPantyrDateString() {
+		return this.pantyrDateString;
+	}
+
+	@Override
 	public Date getPurchaseDate() {
 		return this.purchaseDate;
 	}
 
 	@Override
-	public String getShelfLife() {
-		return this.shelfLife;
+	public String getRefrigerateDateString() {
+		return this.refrigerateDateString;
 	}
 
 	@Override
@@ -90,8 +111,18 @@ public class ItemView implements ItemInterface {
 	}
 
 	@Override
+	public void setFreezerDateString(String freezerDateString) {
+		this.freezerDateString = freezerDateString;
+	}
+
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@Override
+	public void setLongevity(String longevity) {
+		this.longevity = longevity;
 	}
 
 	@Override
@@ -100,25 +131,23 @@ public class ItemView implements ItemInterface {
 	}
 
 	@Override
-	public void setPurchaseDate(Date purchaseDate) {
-		this.purchaseDate = purchaseDate;
-
+	public void setPantyrDateString(String pantyrDateString) {
+		this.pantyrDateString = pantyrDateString;
 	}
 
 	@Override
-	public void setShelfLife(String shelfLife) {
-		this.shelfLife = shelfLife;
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+
+	@Override
+	public void setRefrigerateDateString(String refrigerateDateString) {
+		this.refrigerateDateString = refrigerateDateString;
 	}
 
 	@Override
 	public void setStorageState(String storageState) {
 		this.storageState = storageState;
-	}
-
-	@Override
-	public String toString() {
-		return "ItemView [id=" + this.id + ", name=" + this.name + ", shelfLife=" + this.shelfLife + ", storageState="
-				+ this.storageState + ", purchaseDate=" + this.purchaseDate + ", expiryDate=" + this.expiryDate + "]";
 	}
 
 }

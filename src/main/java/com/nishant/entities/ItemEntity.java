@@ -25,8 +25,8 @@ public class ItemEntity implements ItemInterface {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@Column(name = "SHELF_LIFE")
-	private String shelfLife;
+	@Column(name = "LONGEVITY")
+	private String longevity;
 
 	@Column(name = "STORAGE_STATE", nullable = false)
 	private String storageState;
@@ -36,6 +36,15 @@ public class ItemEntity implements ItemInterface {
 
 	@Column(name = "EXPIRY_DATE")
 	private Date expiryDate;
+
+	@Column(name = "REFRIGERATE_DATE")
+	private String refrigerateDateString;
+
+	@Column(name = "PANTRY_DATE")
+	private String pantyrDateString;
+
+	@Column(name = "FREEZER_DATE")
+	private String freezerDateString;
 
 	/**
 	 *
@@ -54,8 +63,18 @@ public class ItemEntity implements ItemInterface {
 	}
 
 	@Override
+	public String getFreezerDateString() {
+		return this.freezerDateString;
+	}
+
+	@Override
 	public Integer getId() {
 		return this.id;
+	}
+
+	@Override
+	public String getLongevity() {
+		return this.longevity;
 	}
 
 	@Override
@@ -64,13 +83,18 @@ public class ItemEntity implements ItemInterface {
 	}
 
 	@Override
+	public String getPantyrDateString() {
+		return this.pantyrDateString;
+	}
+
+	@Override
 	public Date getPurchaseDate() {
 		return this.purchaseDate;
 	}
 
 	@Override
-	public String getShelfLife() {
-		return this.shelfLife;
+	public String getRefrigerateDateString() {
+		return this.refrigerateDateString;
 	}
 
 	@Override
@@ -84,8 +108,18 @@ public class ItemEntity implements ItemInterface {
 	}
 
 	@Override
+	public void setFreezerDateString(String freezerDateString) {
+		this.freezerDateString = freezerDateString;
+	}
+
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@Override
+	public void setLongevity(String longevity) {
+		this.longevity = longevity;
 	}
 
 	@Override
@@ -94,17 +128,31 @@ public class ItemEntity implements ItemInterface {
 	}
 
 	@Override
+	public void setPantyrDateString(String pantyrDateString) {
+		this.pantyrDateString = pantyrDateString;
+	}
+
+	@Override
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 
 	@Override
-	public void setShelfLife(String shelfLife) {
-		this.shelfLife = shelfLife;
+	public void setRefrigerateDateString(String refrigerateDateString) {
+		this.refrigerateDateString = refrigerateDateString;
 	}
 
 	@Override
 	public void setStorageState(String storageState) {
 		this.storageState = storageState;
 	}
+
+	@Override
+	public String toString() {
+		return "ItemEntity [id=" + this.id + ", name=" + this.name + ", longevity=" + this.longevity + ", storageState="
+				+ this.storageState + ", purchaseDate=" + this.purchaseDate + ", expiryDate=" + this.expiryDate
+				+ ", refrigerateDateString=" + this.refrigerateDateString + ", pantyrDateString="
+				+ this.pantyrDateString + ", freezerDateString=" + this.freezerDateString + "]";
+	}
+
 }
