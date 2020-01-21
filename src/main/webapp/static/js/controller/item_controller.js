@@ -46,7 +46,7 @@
 
 		function fetchAllItems() {
 			ItemService.fetchAllItems().then(function(response) {
-				self.items = d;
+				self.items = response;
 				$log.debug("Fetching items " + self.items);
 			}, function(errResponse) {
 				$log.error('Error while fetching Items');
@@ -54,8 +54,9 @@
 		}
 
 		function createItem(item) {
-			ItemService.createItem(item).then(fetchAllItems,
-					function(errResponse) {
+			ItemService.createItem(item).then(function() {
+				fetchAllItems;
+				}, function(errResponse) {
 						$log.error('Error while creating Item');
 					});
 		}

@@ -40,7 +40,6 @@ public class ItemController {
 	 * </p>
 	 *
 	 * @param itemView
-	 * @param ucBuilder
 	 * @return ResponseEntity
 	 */
 
