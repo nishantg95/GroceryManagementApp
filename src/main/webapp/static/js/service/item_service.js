@@ -21,7 +21,7 @@
 		
 		function fetchAllItems(){
 			return $http.get(REST_SERVICE_URI+"/listAllItems").then(function(resp){
-				$log.debug(resp.data);
+				$log.debug("Item_service:"+resp.data);
 				return resp.data;
 			}).catch(function(error){
 				$log.error(error);

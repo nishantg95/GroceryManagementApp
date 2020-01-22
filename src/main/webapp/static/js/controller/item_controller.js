@@ -1,9 +1,7 @@
 (function() {
 	'use strict';
 
-	angular
-		.module('itemTracker')
-		.controller('ItemController', ItemController);
+	angular.module('itemTracker').controller('ItemController', ItemController);
 
 	ItemController.inject = [ 'ItemService', 'RepoItemService', '$log' ];
 
@@ -55,17 +53,20 @@
 
 		function createItem(item) {
 			ItemService.createItem(item).then(function() {
-				fetchAllItems;
-				}, function(errResponse) {
-						$log.error('Error while creating Item');
-					});
+				fetchAllItems();
+				reset();
+			}, function(errResponse) {
+				$log.error('Error while creating Item');
+			});
 		}
 
 		function updateItem(item, id) {
-			ItemService.updateItem(item, id).then(fetchAllItems,
-					function(errResponse) {
-						$log.error('Error while updating Item');
-					});
+			ItemService.updateItem(item, id).then(function() {
+				fetchAllItems();
+				reset();
+			}, function(errResponse) {
+				$log.error('Error while updating Item');
+			});
 		}
 
 		function deleteItem(id) {
