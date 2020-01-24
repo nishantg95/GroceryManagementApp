@@ -15,9 +15,10 @@
 			<h3>Admin Panel</h3>
 		</div>
 		<div class="row justify-content-center">
-			<div class="col-auto p-3" ng-if="'${repoItem.rName}'!=''">
+			<div class="col-auto p-3" ng-if="'${repoItem.rName}'!=''"
+				id="syncFormResult">
 				<h6>Added following item to the Repo</h6>
-				<table id="syncFormResult"
+				<table id="syncFormResultTable"
 					class="table-sm table-borderless table-responsive .w-auto">
 					<tr>
 						<td>Item Name :</td>
