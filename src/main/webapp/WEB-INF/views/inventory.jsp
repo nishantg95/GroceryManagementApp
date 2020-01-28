@@ -51,8 +51,8 @@
 									<option value="Refrigerator">Refrigerator</option>
 									<option value="Freezer" selected>Freezer</option>
 							</select></th>
-							<th><input type="text" data-ng-model="ctrl.item.shelfLife"
-								id="shelf_life" class="form-control input-sm"
+							<th><input type="text" data-ng-model="ctrl.item.longevity"
+								id="longevity" class="form-control input-sm"
 								placeholder="Shelf Life" form="asyncForm" /></th>
 							<th><input type="text"
 								data-ng-model="ctrl.item.purchaseDate" data-ng-required="true"
@@ -83,16 +83,16 @@
 							id="item_{{$index}}">
 							<td data-ng-bind="i.name"></td>
 							<td data-ng-bind="i.storageState"></td>
-							<td data-ng-bind="i.shelfLife"></td>
+							<td data-ng-bind="i.longevity"></td>
 							<td data-ng-bind="i.purchaseDate|date:'MM-dd-yyyy'"></td>
 							<td data-ng-bind="i.expiryDate|date:'MM-dd-yyyy'"></td>
 							<td>
 								<div class="text-nowrap">
-									<button type="button" data-ng-click="ctrl.edit(i)"
-										class="btn btn-warning">
+									<button type="button" id="edit_button"
+										data-ng-click="ctrl.edit(i)" class="btn btn-warning">
 										<i class="fas fa-edit"></i>
 									</button>
-									<button type="button" data-toggle="modal"
+									<button type="button" id="delete_button" data-toggle="modal"
 										data-ng-click="ctrl.dItem=i" data-target="#deleteConfirmation"
 										class="btn btn-danger">
 										<i class="fas fa-trash"></i>

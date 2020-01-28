@@ -10,7 +10,7 @@
 		self.item = {
 			id : null,
 			name : '',
-			shelfLife : '',
+			longevity : '',
 			purchaseDate : null,
 			expiryDate : null,
 			storageState : '',
@@ -105,7 +105,7 @@
 			self.item = {
 				id : null,
 				name : '',
-				shelfLife : '',
+				longevity : '',
 				purchaseDate : null,
 				expiryDate : null,
 				storageState : '',
@@ -118,7 +118,7 @@
 			$log.log("item=", $item, "model=", $model, "label=", $label,
 					"event=", $event);
 			$model.name = $item.rName;
-			$model.shelfLife = $item.rFridgeDate;
+			$model.longevity = $item.rFridgeDate;
 
 		}
 
