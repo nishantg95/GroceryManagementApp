@@ -93,7 +93,7 @@ public class AdminPanelPageTests {
 	 */
 	@AfterTest
 	public void afterTest() {
-		driver.close();
+		driver.quit();
 	}
 
 }
