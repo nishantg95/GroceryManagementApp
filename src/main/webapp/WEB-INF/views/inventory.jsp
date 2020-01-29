@@ -45,11 +45,12 @@
 							<th><select name="storage_state" class="form-control"
 								data-ng-model="ctrl.item.storageState" data-ng-required="true"
 								form="asyncForm">
-									<option value="" disabled selected>Select storage
+									<option value="" disabled selected hidden>Select storage
 										option</option>
 									<option value="Pantry">Pantry</option>
 									<option value="Refrigerator">Refrigerator</option>
-									<option value="Freezer" selected>Freezer</option>
+									<option value="Freezer">Freezer</option>
+
 							</select></th>
 							<th><input type="text" data-ng-model="ctrl.item.longevity"
 								id="longevity" class="form-control input-sm"
@@ -103,7 +104,7 @@
 					</tbody>
 				</table>
 				<div class="row justify-content-center p-3">
-					<button id="backFromAsync" class="btn btn-light"
+					<button id="backFromSync" class="btn btn-light"
 						onclick="window.location.href = 'welcome';">Back</button>
 				</div>
 			</div>
@@ -129,8 +130,8 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal"
+						<button type="button" id="cancel_delete_button"class="btn btn-warning" data-dismiss="modal">No</button>
+						<button type="button" id="confirm_delete_button" class="btn btn-danger" data-dismiss="modal"
 							data-ng-click="ctrl.remove(ctrl.dItem.id)">Yes</button>
 					</div>
 				</div>
