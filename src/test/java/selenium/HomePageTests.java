@@ -3,20 +3,18 @@ package selenium;
 import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class HomePageTests {
+public class HomePageTests extends BaseTest {
 
-	private WebDriver driver;
 	private static final String HOME_URI = "http://localhost:8081/GroceryManagementApp";
-	private static final String CHROMEDRIVER_LOCATION = "C:\\Users\\nishant.b.grover\\Downloads\\chromedriver_win32\\chromedriver.exe";
 
 	/**
 	 * This test ensures the continuity of the web application by:<br>
@@ -25,17 +23,15 @@ public class HomePageTests {
 	 * page</strong>.<br>
 	 * 3. Click on "back" button from Inventory page, which <strong>redirects back
 	 * to home page.</strong>
-	 * 
-	 * @author nishant.b.grover
 	 */
 	@Test
 	public void navigateToInventory() {
 		driver.get(HOME_URI);
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("asyncPageLink")));
+		wait = new WebDriverWait(driver, 10);
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("asyncPageLink")));
 		element.click();
-		assertEquals(driver.getCurrentUrl(), HOME_URI + "/inventory");
-		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("backFromAsync")));
+		Assert.assertEquals(driver.getCurrentUrl(), HOME_URI + "/inventory");
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("backFromSync")));
 		element.click();
 		assertEquals(driver.getCurrentUrl(), HOME_URI + "/welcome");
 	}
@@ -47,44 +43,40 @@ public class HomePageTests {
 	 * page</strong>.<br>
 	 * 3. Click on "back" button from Admin Panel page, which <strong>redirects back
 	 * to home page.</strong>
-	 * 
-	 * @author nishant.b.grover
 	 */
 	@Test
 	public void navigateToAdmin() {
 		driver.get(HOME_URI);
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("syncPageLink")));
+		wait = new WebDriverWait(driver, 10);
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("syncPageLink")));
 		element.click();
-		assertEquals(driver.getCurrentUrl(), HOME_URI + "/repo/viewRepoItems");
+		Assert.assertEquals(driver.getCurrentUrl(), HOME_URI + "/repo/viewRepoItems");
 		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("backFromAsync")));
 		element.click();
-		assertEquals(driver.getCurrentUrl(), HOME_URI + "/welcome");
+		Assert.assertEquals(driver.getCurrentUrl(), HOME_URI + "/welcome");
 	}
 
 	/**
 	 * Creates new Chrome Driver before executing tests. Must download and specify
 	 * location of chromedriver.exe using <strong>CHROMEDRIVER_LOCATION</strong>
-	 * 
-	 * @author nishant.b.grover
 	 */
 	@BeforeTest
 	public void beforeTest() {
-		// Chrome driver for chrome version 79
-		System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_LOCATION);
-		driver = new ChromeDriver();
+		super.beforeTest();
+		// Fancy re-ordering, push to top left quadrant
+		driver.manage().window().maximize();
+		Dimension windowSize = driver.manage().window().getSize();
+		int desiredHeight = windowSize.height / 2; // Half the screen height
+		int desiredWidth = windowSize.width / 2; // Half the screen width
+		Dimension desiredSize = new Dimension(desiredWidth, desiredHeight);
+		driver.manage().window().setSize(desiredSize);
+		driver.manage().window().setPosition(new Point(0, 0));
 
 	}
 
-	/**
-	 * Closes the Chrome driver that was created and initialized in
-	 * <strong>beforeTest() </strong>
-	 * 
-	 * @author nishant.b.grover
-	 */
 	@AfterTest
 	public void afterTest() {
-		driver.quit();
+		super.afterTest();
 	}
 
 }

@@ -1,14 +1,10 @@
 package selenium;
 
 import java.util.Calendar;
-import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -16,13 +12,9 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class AdminPanelPageTests {
-	private WebDriver driver;
-	private WebDriverWait wait;
-	private WebElement element;
-	private List<WebElement> multipleElements;
+public class AdminPanelPageTests extends BaseTest {
+
 	private static final String ADMIN_URI = "http://localhost:8081/GroceryManagementApp/repo/viewRepoItems";
-	private static final String CHROMEDRIVER_LOCATION = "C:\\Users\\nishant.b.grover\\Downloads\\chromedriver_win32\\chromedriver.exe";
 
 	/**
 	 * This test ensures we can perform a GET request to fetch all Repo items. This
@@ -83,9 +75,7 @@ public class AdminPanelPageTests {
 	 */
 	@BeforeTest
 	public void beforeTest() {
-		// Chrome driver version should match chrome browser version
-		System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_LOCATION);
-		driver = new ChromeDriver();
+		super.beforeTest();
 		// Fancy re-ordering, push to bottom left quadrant
 		driver.manage().window().maximize();
 		Dimension windowSize = driver.manage().window().getSize();
@@ -96,21 +86,9 @@ public class AdminPanelPageTests {
 		driver.manage().window().setPosition(new Point(0, desiredHeight));
 	}
 
-	/**
-	 * Closes the Chrome driver that was created and initialized in
-	 * <strong>beforeTest() </strong>
-	 */
 	@AfterTest
 	public void afterTest() {
-		driver.quit();
-	}
-
-	public void checkIfOffline() {
-		multipleElements = driver.findElements(By.className("error-code"));
-		if (multipleElements.size() != 0) {
-			Assert.fail("Was unable to establish network connection. Front end server is down perhaps?");
-		}
-
+		super.afterTest();
 	}
 
 }
