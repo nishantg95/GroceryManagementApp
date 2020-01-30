@@ -3,13 +3,9 @@ package selenium;
 import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class HomePageTests extends BaseTest {
@@ -55,28 +51,4 @@ public class HomePageTests extends BaseTest {
 		element.click();
 		Assert.assertEquals(driver.getCurrentUrl(), HOME_URI + "/welcome");
 	}
-
-	/**
-	 * Creates new Chrome Driver before executing tests. Must download and specify
-	 * location of chromedriver.exe using <strong>CHROMEDRIVER_LOCATION</strong>
-	 */
-	@BeforeTest
-	public void beforeTest() {
-		super.beforeTest();
-		// Fancy re-ordering, push to top left quadrant
-		driver.manage().window().maximize();
-		Dimension windowSize = driver.manage().window().getSize();
-		int desiredHeight = windowSize.height / 2; // Half the screen height
-		int desiredWidth = windowSize.width / 2; // Half the screen width
-		Dimension desiredSize = new Dimension(desiredWidth, desiredHeight);
-		driver.manage().window().setSize(desiredSize);
-		driver.manage().window().setPosition(new Point(0, 0));
-
-	}
-
-	@AfterTest
-	public void afterTest() {
-		super.afterTest();
-	}
-
 }

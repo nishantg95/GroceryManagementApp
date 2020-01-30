@@ -1,22 +1,19 @@
-/**
- * 
- */
 package selenium;
 
 import static org.testng.Assert.fail;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.nishant.views.RepoItemView;
 
 /**
  * @author nishant.b.grover
@@ -28,6 +25,7 @@ public class BaseTest {
 	protected WebDriverWait wait;
 	protected WebElement element;
 	protected List<WebElement> multipleElements;
+	public static RepoItemView dummyRepoItem;
 
 	private static final String CHROMEDRIVER_LOCATION = "C:\\Users\\nishant.b.grover\\Downloads\\chromedriver_win32\\chromedriver.exe";
 
@@ -35,28 +33,36 @@ public class BaseTest {
 	 * Closes the Chrome driver that was created and initialized in
 	 * <strong>beforeTest() </strong>
 	 */
-	@AfterTest
-	public void afterTest() {
+	@AfterClass
+	public void afterClass() {
+//		System.out.println(dummyRepoItem.toString());
 		driver.quit();
 	}
 
-	public void checkIfOffline() {
-		multipleElements = driver.findElements(By.className("error-code"));
-		if (multipleElements.size() != 0) {
-			Assert.fail("Was unable to establish network connection. Front end server is down perhaps?");
-		}
+	/**
+	 * @return the dummyRepoItem
+	 */
+	public RepoItemView getDummyRepoItem() {
+		return dummyRepoItem;
+	}
 
+	/**
+	 * @param dummyRepoItem the dummyRepoItem to set
+	 */
+	public void setDummyRepoItem(RepoItemView dummyRepoItem) {
+		this.dummyRepoItem = dummyRepoItem;
 	}
 
 	/**
 	 * Creates new Chrome Driver before executing tests. Must download and specify
 	 * location of chromedriver.exe
 	 */
-	@BeforeTest
-	public void beforeTest() {
+	@BeforeClass
+	public void beforeClass() {
 		// Chrome driver version should match chrome browser version
 		System.setProperty("webdriver.chrome.driver", CHROMEDRIVER_LOCATION);
 		driver = new ChromeDriver();
+		driver.manage().window().maximize();
 
 	}
 
@@ -81,10 +87,10 @@ public class BaseTest {
 					return "1".equals(noAjaxRequests.toString());
 				}
 			};
-			WebDriverWait wait = new WebDriverWait(driver, 30);
 			wait.until(pageLoadCondition);
 		} catch (Exception e) {
 			fail("Unable to load the page correctly");
 		}
 	}
+
 }

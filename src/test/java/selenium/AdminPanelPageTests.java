@@ -1,16 +1,15 @@
 package selenium;
 
 import java.util.Calendar;
+import java.util.Random;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import com.nishant.views.RepoItemView;
 
 public class AdminPanelPageTests extends BaseTest {
 
@@ -25,7 +24,7 @@ public class AdminPanelPageTests extends BaseTest {
 	public void GetRepoItems() {
 		driver.get(ADMIN_URI);
 		wait = new WebDriverWait(driver, 10);
-		checkIfOffline();
+		wait.until(ExpectedConditions.urlToBe(ADMIN_URI));
 		multipleElements = driver.findElements(By.id("repo_items"));
 		// Should be visible for a HTTP GET request
 		Assert.assertEquals(multipleElements.size(), 1, "Did not find repo_items table in DOM");
@@ -42,7 +41,6 @@ public class AdminPanelPageTests extends BaseTest {
 	public void RepoItemForm() {
 		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("addRepoItem")));
 		element.click();
-		checkIfOffline();
 		wait.until(ExpectedConditions.urlToBe("http://localhost:8081/GroceryManagementApp/repo/addRepoItemForm"));
 		multipleElements = driver.findElements(By.id("repo_item_form"));
 		Assert.assertEquals(multipleElements.size(), 1, "Missing <form> to add new repo item");
@@ -54,41 +52,30 @@ public class AdminPanelPageTests extends BaseTest {
 	 */
 	@Test(priority = 3, dependsOnMethods = { "GetRepoItems" })
 	public void AddRepoItem() {
-		element = driver.findElement(By.id("item_name_Field"));
-		String itemName = "Dummy Item_" + Calendar.getInstance().getTimeInMillis();
-		element.sendKeys(itemName);
-		element = driver.findElement(By.id("repo_refrigerate_date"));
-		element.sendKeys("5 days");
-		element = driver.findElement(By.id("repo_pantry_date"));
-		element.sendKeys("2 weeks");
-		element = driver.findElement(By.id("repo_freezer_date"));
-		element.sendKeys("1 month");
-		element = driver.findElement(By.id("repo_item_add"));
+		dummyRepoItem = generateDummyItem();
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("item_name_Field")));
+		element.sendKeys(dummyRepoItem.getrName());
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("repo_refrigerate_date")));
+		element.sendKeys(dummyRepoItem.getrFridgeDate());
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("repo_pantry_date")));
+		element.sendKeys(dummyRepoItem.getrPantryDate());
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("repo_freezer_date")));
+		element.sendKeys(dummyRepoItem.getrFreezeDate());
+		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("repo_item_add")));
 		element.click();
 		wait.until(ExpectedConditions.urlToBe(ADMIN_URI));
 		Assert.assertTrue(driver.findElement(By.id("syncFormResult")).isDisplayed());
 	}
 
-	/**
-	 * Creates new Chrome Driver before executing tests. Must download and specify
-	 * location of chromedriver.exe
-	 */
-	@BeforeTest
-	public void beforeTest() {
-		super.beforeTest();
-		// Fancy re-ordering, push to bottom left quadrant
-		driver.manage().window().maximize();
-		Dimension windowSize = driver.manage().window().getSize();
-		int desiredHeight = windowSize.height / 2;
-		int desiredWidth = windowSize.width / 2; // Half the screen width
-		Dimension desiredSize = new Dimension(desiredWidth, desiredHeight);
-		driver.manage().window().setSize(desiredSize);
-		driver.manage().window().setPosition(new Point(0, desiredHeight));
-	}
+	public RepoItemView generateDummyItem() {
+		RepoItemView dummyRepoItem = new RepoItemView();
+		dummyRepoItem.setrName("Dummy Item_" + Calendar.getInstance().getTimeInMillis());
+		Random random = new Random();
+		dummyRepoItem.setrPantryDate(random.nextInt(10) + " days");
+		dummyRepoItem.setrFridgeDate(random.nextInt(6) + " weeks");
+		dummyRepoItem.setrFreezeDate(random.nextInt(4) + " months");
+		return dummyRepoItem;
 
-	@AfterTest
-	public void afterTest() {
-		super.afterTest();
 	}
 
 }
