@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<div class="container-fluid" data-ng-app="itemTracker">
+	<div class="container-fluid"  data-ng-cloak="true" data-ng-app="itemTracker">
 		<div class="row justify-content-center p-3">
 			<h3>Admin Panel</h3>
 		</div>

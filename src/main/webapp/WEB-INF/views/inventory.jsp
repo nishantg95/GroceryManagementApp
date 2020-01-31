@@ -9,7 +9,7 @@
 	crossorigin="anonymous"></script>
 </head>
 
-<body data-ng-app="itemTracker">
+<body data-ng-app="itemTracker" data-ng-cloak="true">
 	<div class="container-fluid"
 		data-ng-controller="ItemController as ctrl">
 		<div class="row justify-content-center p-5">
