@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class InventoryPageTests extends BaseTest {
@@ -21,7 +22,9 @@ public class InventoryPageTests extends BaseTest {
 		driver.get(INVENTORY_URI);
 		wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.urlToBe(INVENTORY_URI));
-		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("name")));
+		Assert.assertTrue(
+				wait.until(ExpectedConditions.textToBe(By.cssSelector("h3#page_title"), "Nishant's Inventory")));
+//		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("name")));
 	}
 
 	@Test(priority = 2, dependsOnMethods = { "openInventoryPage" })
@@ -29,25 +32,22 @@ public class InventoryPageTests extends BaseTest {
 		waitForAngularV1ToFinish();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).sendKeys(getDummyRepoItem().getrName());
 		multipleElements = driver.findElements(By.cssSelector("div.name-typeahead > ul > li"));
-		if (multipleElements.size() > 0) {
-			System.out.println(multipleElements.get(0).getText());
-			multipleElements.get(0).click();
-		} else {
-			// assert failure
-			// OR really add new item
-		}
+		// Assert that item exists in repo_items
+		Assert.assertTrue(multipleElements.size() == 1);
+		multipleElements.get(0).click();
 		Select storageSelect = new Select(driver.findElement(By.name("storage_state")));
 		storageSelect.selectByVisibleText("Pantry");
-		// assert failure
+		// Assert that longevity updated as per value of storageSelect= "Pantry"
+		Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementValue(By.id("longevity"),
+				getDummyRepoItem().getrPantryDate())));
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("purchase_date"))).sendKeys("11-11-2011");
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("addChangeButton"))).click();
-		// assert success
+		// assert add was successful
 	}
 
-	@Test(priority = 3, dependsOnMethods = { "openInventoryPage" })
+//	@Test(priority = 3, dependsOnMethods = { "openInventoryPage" })
 	public void updateFirstItem() {
 		waitForAngularV1ToFinish();
-		wait = new WebDriverWait(driver, 10);
 		element = driver.findElement(By.id("items"));
 		multipleElements = element.findElements(By.cssSelector("tbody>tr"));
 		System.out.println("Number of Items= " + multipleElements.size());
@@ -60,6 +60,12 @@ public class InventoryPageTests extends BaseTest {
 		element.sendKeys("Brownies");
 		Select storageSelect = new Select(driver.findElement(By.name("storage_state")));
 		storageSelect.selectByVisibleText("Freezer");
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// assert failure
 		element = driver.findElement(By.id("purchase_date"));
 		String purchaseString = element.getAttribute("value");
@@ -82,7 +88,7 @@ public class InventoryPageTests extends BaseTest {
 	/**
 	* 
 	*/
-	@Test(priority = 4, dependsOnMethods = { "openInventoryPage" })
+//	@Test(priority = 4, dependsOnMethods = { "openInventoryPage" })
 	private void deleteFirstItem() {
 		waitForAngularV1ToFinish();
 		wait = new WebDriverWait(driver, 10);

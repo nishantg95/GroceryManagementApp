@@ -13,7 +13,7 @@
 	<div class="container-fluid"
 		data-ng-controller="ItemController as ctrl">
 		<div class="row justify-content-center p-5">
-			<h3>Nishant's Inventory</h3>
+			<h3 id="page_title">Nishant's Inventory</h3>
 		</div>
 		<form autocomplete="off" data-ng-submit="ctrl.submit()" id="asyncForm"
 			class="form-inline"></form>
@@ -42,7 +42,7 @@
 										typeahead-on-select="ctrl.autofill($item, ctrl.item, $label, $event)" />
 								</div>
 							</th>
-							<th><select name="storage_state" class="form-control"
+							<th><select name="storage_state" id ="test" class="form-control"
 								data-ng-model="ctrl.item.storageState" data-ng-selected="0"
 								data-ng-options="v.value as v.value disable when v.disabled for v in ctrl.variants"
 								data-ng-change="ctrl.updateLongevity()" data-ng-required="true"
