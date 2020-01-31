@@ -6,16 +6,24 @@
 	ItemController.inject = [ 'ItemService', 'RepoItemService', '$log' ];
 
 	function ItemController(ItemService, RepoItemService, $log) {
+
 		var self = this;
+		self.variants = [ 
+			{id : 0, value : 'Select storage option', disabled : true },
+			{id : 1, value : 'Pantry'},
+			{id : 2, value : 'Refrigerator'},
+			{id : 3, value : 'Freezer'}
+		];
+
 		self.item = {
 			id : null,
 			name : '',
 			longevity : '',
 			purchaseDate : null,
 			expiryDate : null,
-			storageState : '',
+			storageState : self.variants[0].value,
 			refrigerateDateString : null,
-			pantyrDateString : null,
+			pantryDateString : null,
 			freezerDateString : null
 		};
 		self.items = [];
@@ -27,6 +35,7 @@
 		self.remove = remove;
 		self.reset = reset;
 		self.autofill = autofill;
+		self.updateLongevity = updateLongevity;
 
 		fetchAllItems();
 		fetchAllRepoItems();
@@ -108,9 +117,9 @@
 				longevity : '',
 				purchaseDate : null,
 				expiryDate : null,
-				storageState : '',
+				storageState : self.variants[0].value,
 				refrigerateDateString : null,
-				pantyrDateString : null,
+				pantryDateString : null,
 				freezerDateString : null
 			};
 		}
@@ -118,7 +127,26 @@
 			$log.log("item=", $item, "model=", $model, "label=", $label,
 					"event=", $event);
 			$model.name = $item.rName;
-			$model.longevity = $item.rFridgeDate;
+			$model.refrigerateDateString = $item.rFridgeDate;
+			$model.pantryDateString = $item.rPantryDate;
+			$model.freezerDateString = $item.rFreezeDate;
+			// $model.longevity = $item.rFridgeDate;
+
+		}
+
+		function updateLongevity() {
+			switch (self.item.storageState) {
+			case 'Pantry':
+				self.item.longevity = self.item.pantryDateString;
+				break;
+			case 'Refrigerator':
+				self.item.longevity = self.item.refrigerateDateString;
+				break;
+			case 'Freezer':
+				self.item.longevity = self.item.freezerDateString;
+				break;
+			default:
+			}
 
 		}
 

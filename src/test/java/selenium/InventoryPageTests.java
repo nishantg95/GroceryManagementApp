@@ -7,13 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class InventoryPageTests extends BaseTest {
@@ -24,37 +20,27 @@ public class InventoryPageTests extends BaseTest {
 	public void openInventoryPage() {
 		driver.get(INVENTORY_URI);
 		wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.urlToBe(INVENTORY_URI));
 		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("name")));
-//		Assert.fail("");
-		waitForAngularV1ToFinish();
-
-		// assert something
 	}
 
 	@Test(priority = 2, dependsOnMethods = { "openInventoryPage" })
 	public void addNewItem() {
 		waitForAngularV1ToFinish();
-		wait = new WebDriverWait(driver, 10);
-		// Need expected condition to wait for click on input fields
-		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("name")));
-//		WebElement element = driver.findElement(By.id("name"));
-		element.sendKeys("Du");
-		element = driver.findElement(By.className("name-typeahead"));
-		element = element.findElement(By.tagName("ul"));
-		multipleElements = element.findElements(By.tagName("li"));
-		if (multipleElements.size() > 0)
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).sendKeys(getDummyRepoItem().getrName());
+		multipleElements = driver.findElements(By.cssSelector("div.name-typeahead > ul > li"));
+		if (multipleElements.size() > 0) {
+			System.out.println(multipleElements.get(0).getText());
 			multipleElements.get(0).click();
-		else {
+		} else {
 			// assert failure
 			// OR really add new item
 		}
 		Select storageSelect = new Select(driver.findElement(By.name("storage_state")));
 		storageSelect.selectByVisibleText("Pantry");
 		// assert failure
-		element = driver.findElement(By.id("purchase_date"));
-		element.sendKeys("11-11-2011");
-		element = driver.findElement(By.id("addChangeButton"));
-		element.click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("purchase_date"))).sendKeys("11-11-2011");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("addChangeButton"))).click();
 		// assert success
 	}
 
@@ -109,29 +95,6 @@ public class InventoryPageTests extends BaseTest {
 		element = driver.findElement(By.id("confirm_delete_button"));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		element.click();
-	}
-
-	/**
-	 * Creates new Chrome Driver before executing tests. Must download and specify
-	 * location of chromedriver.exe
-	 */
-	@BeforeTest
-	public void beforeTest() {
-		super.beforeTest();
-		// Fancy re-ordering, push to top right and cover both right quadrants
-		driver.manage().window().maximize();
-		Dimension windowSize = driver.manage().window().getSize();
-		int desiredHeight = windowSize.height;
-		int desiredWidth = windowSize.width / 2; // Half the screen width
-		Dimension desiredSize = new Dimension(desiredWidth, desiredHeight);
-		driver.manage().window().setSize(desiredSize);
-		driver.manage().window().setPosition(new Point(desiredWidth, 0));
-
-	}
-
-	@AfterTest
-	public void afterTest() {
-		super.afterTest();
 	}
 
 }

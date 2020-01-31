@@ -43,13 +43,14 @@
 								</div>
 							</th>
 							<th><select name="storage_state" class="form-control"
-								data-ng-model="ctrl.item.storageState" data-ng-required="true"
+								data-ng-model="ctrl.item.storageState" data-ng-selected="0"
+								data-ng-options="v.value as v.value disable when v.disabled for v in ctrl.variants"
+								data-ng-change="ctrl.updateLongevity()" data-ng-required="true"
 								form="asyncForm">
-									<option value="" disabled selected hidden>Select storage
-										option</option>
+									<!-- <option value="" disabled selected hidden>Select storage option</option>
 									<option value="Pantry">Pantry</option>
 									<option value="Refrigerator">Refrigerator</option>
-									<option value="Freezer">Freezer</option>
+									<option value="Freezer">Freezer</option> -->
 
 							</select></th>
 							<th><input type="text" data-ng-model="ctrl.item.longevity"
@@ -130,8 +131,10 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" id="cancel_delete_button"class="btn btn-warning" data-dismiss="modal">No</button>
-						<button type="button" id="confirm_delete_button" class="btn btn-danger" data-dismiss="modal"
+						<button type="button" id="cancel_delete_button"
+							class="btn btn-warning" data-dismiss="modal">No</button>
+						<button type="button" id="confirm_delete_button"
+							class="btn btn-danger" data-dismiss="modal"
 							data-ng-click="ctrl.remove(ctrl.dItem.id)">Yes</button>
 					</div>
 				</div>
