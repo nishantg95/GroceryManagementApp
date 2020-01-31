@@ -41,7 +41,7 @@ public class ItemEntity implements ItemInterface {
 	private String refrigerateDateString;
 
 	@Column(name = "PANTRY_DATE")
-	private String pantyrDateString;
+	private String pantryDateString;
 
 	@Column(name = "FREEZER_DATE")
 	private String freezerDateString;
@@ -84,7 +84,7 @@ public class ItemEntity implements ItemInterface {
 
 	@Override
 	public String getPantyrDateString() {
-		return this.pantyrDateString;
+		return this.pantryDateString;
 	}
 
 	@Override
@@ -128,8 +128,8 @@ public class ItemEntity implements ItemInterface {
 	}
 
 	@Override
-	public void setPantyrDateString(String pantyrDateString) {
-		this.pantyrDateString = pantyrDateString;
+	public void setPantyrDateString(String pantryDateString) {
+		this.pantryDateString = pantryDateString;
 	}
 
 	@Override
@@ -151,8 +151,8 @@ public class ItemEntity implements ItemInterface {
 	public String toString() {
 		return "ItemEntity [id=" + this.id + ", name=" + this.name + ", longevity=" + this.longevity + ", storageState="
 				+ this.storageState + ", purchaseDate=" + this.purchaseDate + ", expiryDate=" + this.expiryDate
-				+ ", refrigerateDateString=" + this.refrigerateDateString + ", pantyrDateString="
-				+ this.pantyrDateString + ", freezerDateString=" + this.freezerDateString + "]";
+				+ ", refrigerateDateString=" + this.refrigerateDateString + ", pantryDateString="
+				+ this.pantryDateString + ", freezerDateString=" + this.freezerDateString + "]";
 	}
 
 }

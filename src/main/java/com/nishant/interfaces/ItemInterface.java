@@ -32,7 +32,7 @@ public interface ItemInterface {
 
 	void setName(String name);
 
-	void setPantyrDateString(String pantyrDateString);
+	void setPantyrDateString(String pantryDateString);
 
 	void setPurchaseDate(Date purchaseDate);
 

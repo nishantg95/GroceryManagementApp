@@ -40,7 +40,7 @@ public class ItemView implements ItemInterface {
 
 	private String refrigerateDateString;
 
-	private String pantyrDateString;
+	private String pantryDateString;
 
 	private String freezerDateString;
 
@@ -87,7 +87,7 @@ public class ItemView implements ItemInterface {
 
 	@Override
 	public String getPantyrDateString() {
-		return this.pantyrDateString;
+		return this.pantryDateString;
 	}
 
 	@Override
@@ -131,8 +131,8 @@ public class ItemView implements ItemInterface {
 	}
 
 	@Override
-	public void setPantyrDateString(String pantyrDateString) {
-		this.pantyrDateString = pantyrDateString;
+	public void setPantyrDateString(String pantryDateString) {
+		this.pantryDateString = pantryDateString;
 	}
 
 	@Override
