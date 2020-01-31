@@ -25,7 +25,7 @@ public class BaseTest {
 	protected WebDriverWait wait;
 	protected WebElement element;
 	protected List<WebElement> multipleElements;
-	public static RepoItemView dummyRepoItem;
+	protected static RepoItemView dummyRepoItem;
 
 	private static final String CHROMEDRIVER_LOCATION = "C:\\Users\\nishant.b.grover\\Downloads\\chromedriver_win32\\chromedriver.exe";
 
@@ -50,7 +50,7 @@ public class BaseTest {
 	 * @param dummyRepoItem the dummyRepoItem to set
 	 */
 	public void setDummyRepoItem(RepoItemView dummyRepoItem) {
-		this.dummyRepoItem = dummyRepoItem;
+		BaseTest.dummyRepoItem = dummyRepoItem;
 	}
 
 	/**
