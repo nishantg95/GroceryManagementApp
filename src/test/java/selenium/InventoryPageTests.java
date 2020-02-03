@@ -24,11 +24,10 @@ public class InventoryPageTests extends BaseTest {
 		wait.until(ExpectedConditions.urlToBe(INVENTORY_URI));
 		Assert.assertTrue(
 				wait.until(ExpectedConditions.textToBe(By.cssSelector("h3#page_title"), "Nishant's Inventory")));
-//		element = wait.until(ExpectedConditions.elementToBeClickable(By.id("name")));
 	}
 
 	@Test(priority = 2, dependsOnMethods = { "openInventoryPage" })
-	public void addNewItem() {
+	public void addItemWithAutocomplete() {
 		waitForAngularV1ToFinish();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).sendKeys(getDummyRepoItem().getrName());
 		multipleElements = driver.findElements(By.cssSelector("div.name-typeahead > ul > li"));
@@ -40,67 +39,84 @@ public class InventoryPageTests extends BaseTest {
 		// Assert that longevity updated as per value of storageSelect= "Pantry"
 		Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementValue(By.id("longevity"),
 				getDummyRepoItem().getrPantryDate())));
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("purchase_date"))).sendKeys("11-11-2011");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("purchase_date"))).sendKeys("11-11-2020");
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("addChangeButton"))).click();
-		// assert add was successful
+		waitForAngularV1ToFinish();
+		String validatorString = String.join(" ", dummyRepoItem.getrName(), "Pantry", dummyRepoItem.getrPantryDate(),
+				"11-11-2020");
+		element = driver.findElement(By.id("item_0"));
+		// Assert that item was added to the top of the list
+		Assert.assertEquals(element.getText(), validatorString);
 	}
 
-//	@Test(priority = 3, dependsOnMethods = { "openInventoryPage" })
-	public void updateFirstItem() {
+	@Test(priority = 3, dependsOnMethods = { "openInventoryPage" })
+	public void addItemWithoutAutocomplete() {
 		waitForAngularV1ToFinish();
-		element = driver.findElement(By.id("items"));
-		multipleElements = element.findElements(By.cssSelector("tbody>tr"));
-		System.out.println("Number of Items= " + multipleElements.size());
-		element = multipleElements.get(0).findElement(By.id("edit_button"));
-		wait.until(ExpectedConditions.elementToBeClickable(element));
-		element.click();
-
-		element = driver.findElement(By.id("name"));
-		element.clear();
-		element.sendKeys("Brownies");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).sendKeys("Mock object!@#$");
 		Select storageSelect = new Select(driver.findElement(By.name("storage_state")));
 		storageSelect.selectByVisibleText("Freezer");
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// assert failure
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("purchase_date"))).sendKeys("01-11-2020");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("addChangeButton"))).click();
+		waitForAngularV1ToFinish();
+		String validatorString = String.join(" ", "Mock object!@#$", "Freezer", "01-11-2020");
+		element = driver.findElement(By.id("item_0"));
+		// Assert that item was added to the top of the list
+		Assert.assertEquals(element.getText(), validatorString);
+	}
+
+	@Test(priority = 4, dependsOnMethods = { "openInventoryPage", "addItemWithoutAutocomplete" })
+	public void updateFirstItem() {
+		waitForAngularV1ToFinish();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("edit_button_0"))).click(); // click edit button
+		element = driver.findElement(By.id("name"));
+		element.clear();
+		element.sendKeys("Brownies"); // update name
+
+		Select storageSelect = new Select(driver.findElement(By.name("storage_state")));
+		storageSelect.selectByVisibleText("Freezer");// update storage_state
+
 		element = driver.findElement(By.id("purchase_date"));
 		String purchaseString = element.getAttribute("value");
 		element = driver.findElement(By.id("expiry_date"));
 		element.clear();
-		// create the date for today
 		String today = new SimpleDateFormat("MM-dd-YYYY").format(new Date());
-		element.sendKeys(today);
+		element.sendKeys(today);// update expiry to today
+
 		Period period = Period.between(LocalDate.parse(purchaseString, DateTimeFormatter.ofPattern("MM-dd-yyyy")),
 				LocalDate.parse(today, DateTimeFormatter.ofPattern("MM-dd-yyyy")));
-		System.out.println("Period= " + period.getDays() + " days");
 		element = driver.findElement(By.id("longevity"));
 		element.clear();
-		element.sendKeys(String.join(" ", Integer.toString(period.getDays()), "days"));
+		element.sendKeys(String.join(" ", Integer.toString(period.getDays()), "days"));// update Longevity
+
 		element = driver.findElement(By.id("addChangeButton"));
 		element.click();
 
+		waitForAngularV1ToFinish();
+		String validatorString = String.join(" ", "Brownies", "Freezer", period.getDays() + " days", "01-11-2020",
+				today);
+		element = driver.findElement(By.id("item_0"));
+		// Assert that item was added to the top of the list
+		Assert.assertEquals(element.getText(), validatorString);
 	}
 
 	/**
 	* 
 	*/
-//	@Test(priority = 4, dependsOnMethods = { "openInventoryPage" })
+	@Test(priority = 5, dependsOnMethods = { "openInventoryPage" })
 	private void deleteFirstItem() {
 		waitForAngularV1ToFinish();
-		wait = new WebDriverWait(driver, 10);
 		element = driver.findElement(By.id("items"));
 		multipleElements = element.findElements(By.cssSelector("tbody>tr"));
-		System.out.println("Number of Items= " + multipleElements.size());
-		element = multipleElements.get(0).findElement(By.id("delete_button"));
-		wait.until(ExpectedConditions.elementToBeClickable(element));
-		element.click();
-		element = driver.findElement(By.id("confirm_delete_button"));
-		wait.until(ExpectedConditions.elementToBeClickable(element));
-		element.click();
+		System.out.println(multipleElements.size());
+		Integer sizeBeforeDelete = multipleElements.size();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("delete_button_0"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("confirm_delete_button"))).click();
+		waitForAngularV1ToFinish();
+		element = driver.findElement(By.id("items"));
+		multipleElements = element.findElements(By.cssSelector("tbody>tr"));
+		Integer sizePostDeleteInteger = multipleElements.size();
+		System.out.println(multipleElements.size());
+		Assert.assertTrue(sizeBeforeDelete == (sizePostDeleteInteger + 1));
 	}
 
 }

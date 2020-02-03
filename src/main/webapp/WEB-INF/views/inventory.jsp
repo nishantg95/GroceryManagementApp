@@ -90,11 +90,11 @@
 							<td data-ng-bind="i.expiryDate|date:'MM-dd-yyyy'"></td>
 							<td>
 								<div class="text-nowrap">
-									<button type="button" id="edit_button"
+									<button type="button" id="edit_button_{{$index}}"
 										data-ng-click="ctrl.edit(i)" class="btn btn-warning">
 										<i class="fas fa-edit"></i>
 									</button>
-									<button type="button" id="delete_button" data-toggle="modal"
+									<button type="button" id="delete_button_{{$index}}" data-toggle="modal"
 										data-ng-click="ctrl.dItem=i" data-target="#deleteConfirmation"
 										class="btn btn-danger">
 										<i class="fas fa-trash"></i>

@@ -13,8 +13,9 @@
 		<div class="container" data-ng-model="ctrl.items">
 			<h2>Welcome Back, Nishant!!</h2>
 			<p>
-				You have <span>{{ctrl.items.length}}</span> ingredients in your
-				inventory.
+				You have <span data-ng-pluralize count="ctrl.items.length"
+					when="{'1': '{} ingredient', 'other':'{} ingredients'}"></span>
+				in your inventory.
 			</p>
 		</div>
 	</div>
