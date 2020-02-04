@@ -14,7 +14,7 @@ public interface ItemInterface {
 
 	String getName();
 
-	String getPantyrDateString();
+	String getpantryDateString();
 
 	Date getPurchaseDate();
 
@@ -32,7 +32,7 @@ public interface ItemInterface {
 
 	void setName(String name);
 
-	void setPantyrDateString(String pantyrDateString);
+	void setpantryDateString(String pantryDateString);
 
 	void setPurchaseDate(Date purchaseDate);
 

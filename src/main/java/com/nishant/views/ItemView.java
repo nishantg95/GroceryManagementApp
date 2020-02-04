@@ -83,7 +83,7 @@ public class ItemView implements ItemInterface {
 	}
 
 	@Override
-	public String getPantyrDateString() {
+	public String getpantryDateString() {
 		return this.pantryDateString;
 	}
 
@@ -128,8 +128,8 @@ public class ItemView implements ItemInterface {
 	}
 
 	@Override
-	public void setPantyrDateString(String pantyrDateString) {
-		this.pantryDateString = pantyrDateString;
+	public void setpantryDateString(String pantryDateString) {
+		this.pantryDateString = pantryDateString;
 	}
 
 	@Override
