@@ -19,7 +19,7 @@ import com.nishant.entities.RepoItemEntity;
  * @author nishant.b.grover
  *
  */
-public class BaseTest {
+public class BaseSeleniumTest {
 
 	protected static RepoItemEntity dummyRepoItem;
 	private static final String CHROMEDRIVER_LOCATION = "C:\\Users\\nishant.b.grover\\Downloads\\chromedriver_win32\\chromedriver.exe";
@@ -35,7 +35,6 @@ public class BaseTest {
 	 */
 	@AfterClass
 	public void afterClass() {
-//		System.out.println(dummyRepoItem.toString());
 		this.driver.quit();
 	}
 
@@ -63,7 +62,7 @@ public class BaseTest {
 	 * @param dummyRepoItem the dummyRepoItem to set
 	 */
 	public void setDummyRepoItem(RepoItemEntity dummyRepoItem) {
-		BaseTest.dummyRepoItem = dummyRepoItem;
+		BaseSeleniumTest.dummyRepoItem = dummyRepoItem;
 	}
 
 	/**

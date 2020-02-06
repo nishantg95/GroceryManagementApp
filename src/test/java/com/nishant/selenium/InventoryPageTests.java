@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class InventoryPageTests extends BaseTest {
+public class InventoryPageTests extends BaseSeleniumTest {
 
 	private static final String INVENTORY_URI = "http://localhost:8081/GroceryManagementApp/inventory";
 
@@ -64,7 +64,6 @@ public class InventoryPageTests extends BaseTest {
 		this.waitForAngularV1ToFinish();
 		this.element = this.driver.findElement(By.id("items"));
 		this.multipleElements = this.element.findElements(By.cssSelector("tbody>tr"));
-		System.out.println(this.multipleElements.size());
 		Integer sizeBeforeDelete = this.multipleElements.size();
 		this.wait.until(ExpectedConditions.elementToBeClickable(By.id("delete_button_0"))).click();
 		this.wait.until(ExpectedConditions.elementToBeClickable(By.id("confirm_delete_button"))).click();
@@ -72,7 +71,6 @@ public class InventoryPageTests extends BaseTest {
 		this.element = this.driver.findElement(By.id("items"));
 		this.multipleElements = this.element.findElements(By.cssSelector("tbody>tr"));
 		Integer sizePostDeleteInteger = this.multipleElements.size();
-		System.out.println(this.multipleElements.size());
 		Assert.assertTrue(sizeBeforeDelete == (sizePostDeleteInteger + 1));
 	}
 

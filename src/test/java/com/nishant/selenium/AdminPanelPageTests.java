@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import com.nishant.entities.RepoItemEntity;
 
-public class AdminPanelPageTests extends BaseTest {
+public class AdminPanelPageTests extends BaseSeleniumTest {
 
 	private static final String ADMIN_URI = "http://localhost:8081/GroceryManagementApp/repo/viewRepoItems";
 

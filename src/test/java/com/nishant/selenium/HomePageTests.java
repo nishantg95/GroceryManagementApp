@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class HomePageTests extends BaseTest {
+public class HomePageTests extends BaseSeleniumTest {
 
 	private static final String HOME_URI = "http://localhost:8081/GroceryManagementApp";
 
