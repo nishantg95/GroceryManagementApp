@@ -150,4 +150,12 @@ public class ItemView implements ItemInterface {
 		this.storageState = storageState;
 	}
 
+	@Override
+	public String toString() {
+		return "ItemView [id=" + this.id + ", name=" + this.name + ", longevity=" + this.longevity + ", storageState="
+				+ this.storageState + ", purchaseDate=" + this.purchaseDate + ", expiryDate=" + this.expiryDate
+				+ ", refrigerateDateString=" + this.refrigerateDateString + ", pantryDateString="
+				+ this.pantryDateString + ", freezerDateString=" + this.freezerDateString + "]";
+	}
+
 }
