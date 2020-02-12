@@ -1,0 +1,36 @@
+
+/************************************ Page speciifc style elements **************************************/
+
+
+/* TODOL Move these to specific CSS files */
+/*addRepoItemForm.jsp */
+
+/* viewRepoItem.jsp */
+
+/* inventory.jsp */
+
+/* Bootstrap style CSS for autocomplete */
+.name-typeahead .dropdown-menu {
+
+}
+
+.name-typeahead .dropdown-menu li a {
+	display: block;
+	padding: 3px 15px;
+	clear: both;
+	font-weight: normal;
+	line-height: 18px;
+	color: #555555;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+.name-typeahead .dropdown-menu li.active a {
+	color: white;
+	text-decoration: none;
+	background-color: #007bff;
+	border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	background-image: none;
+}
