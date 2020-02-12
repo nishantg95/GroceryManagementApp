@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+/********************************* Universal elements **************************************/
+body {
+	background: #56CCF2; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #2F80ED, #56CCF2);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	font-family: 'Varela Round', sans-serif;
+  font-size: 13px;
+}
+
+.table caption {
+	caption-side: top;
+	background: #2E6A80;
+	color: white;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	padding: 15px 15px 15px;
+	position: sticky;
+	top: 0;
+}
+
+.table thead th{
+	position: sticky;
+	top: 70px;
+}
+
+.required:after {
+	content: " *";
+	color: red
+}
+
+.requiredfootnote:before {
+	content: "* ";
+	color: red
+}
