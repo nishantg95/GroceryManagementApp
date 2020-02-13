@@ -10,6 +10,7 @@ import { Item } from '../item';
 export class ItemsComponent implements OnInit {
 
   items: Item[];
+  dItem = null;
 
   constructor(private itemsService: ItemsService) { }
 
@@ -19,6 +20,10 @@ export class ItemsComponent implements OnInit {
 
   listAllItems(): void {
     this.itemsService.listAllItems().subscribe(items => this.items = items);
+  }
+
+  deleteItem(item: Item) {
+    this.itemsService.deleteItem(item).subscribe(() => {this.listAllItems(); });
   }
 
 }

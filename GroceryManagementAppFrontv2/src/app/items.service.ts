@@ -14,10 +14,7 @@ export class ItemsService {
 
   private BASE_URL = 'http://localhost:8080/GroceryManagementApp/data';
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json',
-     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-     'Access-Control-Allow-Origin':  'http://localhost:4200',
-     'Access-Control-Allow-Credentials': 'true' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   constructor(
@@ -45,10 +42,21 @@ private handleError<T>(operation = 'operation', result?: T) {
 
     // TODO: better job of transforming error for user consumption
     // this.log(`${operation} failed: ${error.message}`);
+    alert('Lost connection to server');
 
     // Let the app keep running by returning an empty result.
     return of(result as T);
   };
+}
+
+deleteItem(item: Item): Observable<{}> {
+  console.log(item.name);
+  const response =  this.http.delete(this.BASE_URL + '/deleteItem/' + item.id, this.httpOptions).pipe(
+    // tap(_ => this.log(`deleted item id=${item.id}`)),
+    catchError(this.handleError<Item>('deleteItem'))
+  );
+  this.listAllItems();
+  return response;
 }
 
 }
