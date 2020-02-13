@@ -1,0 +1,33 @@
+<div class="jumbotron text-center jumbotron-fluid" data-ng-controller="ItemController as ctrl">
+  <div class="container" data-ng-model="ctrl.items">
+    <h2>Welcome Back, Nishant!!</h2>
+    <p>
+      You have
+      <span data-ng-pluralize count="ctrl.items.length"
+        when="{'1': '{} ingredient', 'other':'{} ingredients'}"></span>
+      in your inventory.
+    </p>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="bar">
+    <p>
+      Overall health:
+      <progress max="100" value="77"></progress>
+    </p>
+  </div>
+  <div class="row justify-content-center mt-5">
+    <!-- <button class="btn btn-light" id="syncPageLink" onclick="window.location.href = 'repo/viewRepoItems';">
+      Admin Panel
+    </button>
+    <button class="btn btn-light ml-3" id="asyncPageLink" onclick="window.location.href = 'inventory';">
+      View Inventory
+    </button> -->
+    <button class="btn btn-light" id="syncPageLink" routerLink="/GroceryManagementApp/repo/viewRepoItems" >
+      Admin Panel
+    </button>
+    <button class="btn btn-light ml-3" id="asyncPageLink" routerLink="/GroceryManagementApp/inventory" >
+      View Inventory
+    </button>
+  </div>
+</div>

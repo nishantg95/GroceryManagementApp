@@ -1,0 +1,13 @@
+.modal p {
+	word-wrap: break-word;
+}
+
+table tr {
+	padding-right: 25px;
+	padding-left: 25px
+}
+
+#items {
+	overflow-y: auto;
+	height: 80vh;
+}
