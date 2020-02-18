@@ -3,24 +3,25 @@
 		<div class="row justify-content-center p-5">
 			<h3 id="page_title">Nishant's Inventory</h3>
 		</div>
-		<form autocomplete="off" data-ng-submit="ctrl.submit()" id="asyncForm"
-			class="form-inline"></form>
+		<!-- <form autocomplete="off" data-ng-submit="ctrl.submit()" id="asyncForm"
+			class="form-inline"></form> -->
 		<div class="panel">
 			<div class="tablecontainer">
 				<table class="table table-light table-hover .w-auto" id="items">
 					<caption>
 						<h3>Manage Items</h3>
 					</caption>
-					<thead>
-						<tr>
+					<thead app-item-form>
+						<!-- <tr>
 							<th class="required">Name</th>
 							<th class="required">Storage Location</th>
 							<th>Longevity</th>
 							<th class="required">Purchase Date</th>
 							<th>Expiry Date</th>
 							<th>Actions</th>
-						</tr>
-						<tr class="table-info">
+            </tr> -->
+
+						<!-- <tr class="table-info">
 							<th>
 								<div class="name-typeahead">
 									<input type="text" data-ng-model="ctrl.item.name" id="name"
@@ -34,13 +35,13 @@
 								data-ng-model="ctrl.item.storageState" data-ng-selected="0"
 								data-ng-options="v.value as v.value disable when v.disabled for v in ctrl.variants"
 								data-ng-change="ctrl.updateLongevity()" data-ng-required="true"
-								form="asyncForm">
+								form="asyncForm"> -->
 									<!-- <option value="" disabled selected hidden>Select storage option</option>
 									<option value="Pantry">Pantry</option>
 									<option value="Refrigerator">Refrigerator</option>
 									<option value="Freezer">Freezer</option> -->
 
-							</select></th>
+							<!-- </select></th>
 							<th><input type="text" data-ng-model="ctrl.item.longevity"
 								id="longevity" class="form-control input-sm"
 								placeholder="Shelf Life" form="asyncForm" /></th>
@@ -66,7 +67,7 @@
 									</button>
 								</div>
 							</th>
-						</tr>
+						</tr> -->
 					</thead>
 					<tbody>
 						<tr class="animation" *ngFor="let item of items; let i = index"
