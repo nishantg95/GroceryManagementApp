@@ -1,3 +1,5 @@
+<form autocomplete="off"  (ngSubmit)="onSubmit(itemForm)" id="asyncForm"
+			class="form-inline"></form>
 <tr>
   <th class="required">Name</th>
   <th class="required">Storage Location</th>
@@ -6,38 +8,37 @@
   <th>Expiry Date</th>
   <th>Actions</th>
 </tr>
-		<!-- <form autocomplete="off" data-ng-submit="ctrl.submit()" id="asyncForm"
-			class="form-inline"></form> -->
-<tr class="table-info" [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+<tr [formGroup]="itemForm" class="table-info">
   <th>
     <div class="name-typeahead">
-      <input type="text" formControlName="name" data-ng-model="ctrl.item.name" id="name" class="form-control input-sm"
-        placeholder="Item name" form="asyncForm" data-ng-required="true"
+      <input type="text"  id="name" class="form-control input-sm"
+        placeholder="Item name" form="asyncForm" data-ng-required="true" formControlName="name"
         uib-typeahead="rItem as rItem.rName for rItem in ctrl.repoItems | filter:$viewValue | limitTo:10"
         typeahead-on-select="ctrl.autofill($item, ctrl.item, $label, $event)" />
     </div>
   </th>
   <th>
-    <select name="storage_state" id="test" formControlName="storageState" class="form-control"
-      data-ng-model="ctrl.item.storageState" data-ng-selected="0"
+    <select name="storage_state" id="test"  class="form-control"
+      data-ng-model="ctrl.item.storageState" formControlName="storageState"
       data-ng-options="v.value as v.value disable when v.disabled for v in ctrl.variants"
       data-ng-change="ctrl.updateLongevity()" data-ng-required="true" form="asyncForm">
-      <!-- <option value="" disabled selected hidden>Select storage option</option>
-      <option value="Pantry">Pantry</option>
+      <option value="" disabled selected hidden>Select storage option</option>
+      <!-- <option value="Pantry">Pantry</option>
       <option value="Refrigerator">Refrigerator</option>
       <option value="Freezer">Freezer</option> -->
+      <option *ngFor="let options of longevityOptions">{{options}}</option>
     </select>
   </th>
   <th>
-    <input type="text" formControlName="longevity" data-ng-model="ctrl.item.longevity" id="longevity"
+    <input type="text" id="longevity" formControlName="longevity"
       class="form-control input-sm" placeholder="Shelf Life" form="asyncForm" />
   </th>
   <th>
-    <input type="text" data-ng-model="ctrl.item.purchaseDate" formControlName="purchaseDate" data-ng-required="true"
+    <input type="text" data-ng-model="ctrl.item.purchaseDate"  data-ng-required="true" formControlName="purchaseDate"
       id="purchase_date" class="form-control input-sm" placeholder="Purchase date" form="asyncForm" />
   </th>
   <th>
-    <input type="text" formControlName="expiryDate" data-ng-model="ctrl.item.expiryDate" id="expiry_date"
+    <input type="text"  data-ng-model="ctrl.item.expiryDate" id="expiry_date"  formControlName="expiryDate"
       class="form-control input-sm" placeholder="Expiry date" form="asyncForm" />
   </th>
 
@@ -47,7 +48,7 @@
         form="asyncForm" id="addChangeButton">
         <i class="fas fa-plus"></i>
       </button>
-      <button type="button" data-ng-click="ctrl.reset()" class="btn btn-primary" form="asyncForm"
+      <button type="button" (click)="itemForm.reset()" class="btn btn-primary" form="asyncForm"
         data-ng-disabled="asyncForm.$pristine" data-toggle="tooltip" data-placement="right" title="Clear">
         <i class="fas fa-backspace"></i>
       </button>

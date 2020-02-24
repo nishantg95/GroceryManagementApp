@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -27,6 +27,7 @@ import { ItemFormComponent } from './item-form/item-form.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     // MatProgressSpinner
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}],

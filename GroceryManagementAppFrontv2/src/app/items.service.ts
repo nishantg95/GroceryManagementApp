@@ -59,4 +59,14 @@ deleteItem(item: Item): Observable<{}> {
   return response;
 }
 
+
+addItem(item: Item): Observable<{}> {
+  const response =  this.http.post(this.BASE_URL + '/createItem/', item, this.httpOptions).pipe(
+    // tap(_ => this.log(`deleted item id=${item.id}`)),
+    catchError(this.handleError<Item>('addItem'))
+  );
+  this.listAllItems();
+  return response;
+}
+
 }

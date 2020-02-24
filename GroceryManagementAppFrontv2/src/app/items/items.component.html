@@ -11,7 +11,7 @@
 					<caption>
 						<h3>Manage Items</h3>
 					</caption>
-					<thead app-item-form>
+					<thead app-item-form #itemForm>
 						<!-- <tr>
 							<th class="required">Name</th>
 							<th class="required">Storage Location</th>
@@ -80,7 +80,7 @@
 							<td>
 								<div class="text-nowrap">
 									<button type="button" id="edit_button_{{i}}"
-										data-ng-click="ctrl.edit(i)" class="btn btn-warning">
+										(click) ="itemForm.edit(item)" class="btn btn-warning">
 										<i class="fas fa-edit"></i>
 									</button>
 									<button type="button" id="delete_button_{{i}}" data-toggle="modal" (click)="dItem = item"
