@@ -1,4 +1,4 @@
-<form autocomplete="off"  (ngSubmit)="onSubmit(itemForm)" id="asyncForm"
+<form name="form" autocomplete="off" #itemForm="ngForm" (ngSubmit)="itemForm.form.valid && onSubmit()" id="asyncForm"
 			class="form-inline"></form>
 <tr>
   <th class="required">Name</th>
@@ -8,50 +8,120 @@
   <th>Expiry Date</th>
   <th>Actions</th>
 </tr>
-<tr [formGroup]="itemForm" class="table-info">
+<tr class="table-info">
   <th>
     <div class="name-typeahead">
-      <input type="text"  id="name" class="form-control input-sm"
-        placeholder="Item name" form="asyncForm" data-ng-required="true" formControlName="name"
+      <input type="text"  id="name" class="form-control input-sm" [(ngModel)]="item.name" #name="ngModel"
+        placeholder="Item name" form="asyncForm" required [ngClass]="{ 'is-invalid': itemForm.submitted && name.invalid }"
+
         uib-typeahead="rItem as rItem.rName for rItem in ctrl.repoItems | filter:$viewValue | limitTo:10"
         typeahead-on-select="ctrl.autofill($item, ctrl.item, $label, $event)" />
     </div>
   </th>
   <th>
-    <select name="storage_state" id="test"  class="form-control"
-      data-ng-model="ctrl.item.storageState" formControlName="storageState"
+    <select name="storage_state" id="test" #storageState="ngModel"  class="form-control"
+      [(ngModel)]="item.storageState"
       data-ng-options="v.value as v.value disable when v.disabled for v in ctrl.variants"
-      data-ng-change="ctrl.updateLongevity()" data-ng-required="true" form="asyncForm">
-      <option value="" disabled selected hidden>Select storage option</option>
-      <!-- <option value="Pantry">Pantry</option>
-      <option value="Refrigerator">Refrigerator</option>
-      <option value="Freezer">Freezer</option> -->
+      data-ng-change="ctrl.updateLongevity()" required form="asyncForm">
+      <option [ngValue]="null" disabled selected hidden >Select storage option</option>
       <option *ngFor="let options of longevityOptions">{{options}}</option>
     </select>
   </th>
   <th>
-    <input type="text" id="longevity" formControlName="longevity"
+    <input type="text" id="longevity" [(ngModel)]="item.longevity"
       class="form-control input-sm" placeholder="Shelf Life" form="asyncForm" />
   </th>
   <th>
-    <input type="text" data-ng-model="ctrl.item.purchaseDate"  data-ng-required="true" formControlName="purchaseDate"
+    <input type="text" [(ngModel)]="item.purchaseDate" required #purchaseDate="ngModel"
       id="purchase_date" class="form-control input-sm" placeholder="Purchase date" form="asyncForm" />
   </th>
   <th>
-    <input type="text"  data-ng-model="ctrl.item.expiryDate" id="expiry_date"  formControlName="expiryDate"
+    <input type="text"  [(ngModel)]="item.expiryDate" id="expiry_date"
       class="form-control input-sm" placeholder="Expiry date" form="asyncForm" />
   </th>
 
   <th>
     <div class="text-nowrap">
-      <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="right" title="Submit"
+      <button type="submit" class="btn btn-success" [disabled]="storageState.invalid || name.invalid || purchaseDate.invalid " data-toggle="tooltip" data-placement="right" title="Submit"
         form="asyncForm" id="addChangeButton">
         <i class="fas fa-plus"></i>
       </button>
-      <button type="button" (click)="itemForm.reset()" class="btn btn-primary" form="asyncForm"
+      <button type="reset" class="btn btn-primary" form="asyncForm" (click)="resetItemForm()"
         data-ng-disabled="asyncForm.$pristine" data-toggle="tooltip" data-placement="right" title="Clear">
         <i class="fas fa-backspace"></i>
       </button>
     </div>
   </th>
+  <th>
+    <div >{{itemForm.invalid}}</div>
+    <div>{{storageState.invalid || name.invalid}}</div>
+  </th>
 </tr>
+<!-- <form id="name" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+</form>
+<tr>
+
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Title</label>
+            <select form="name" name="title" class="form-control" [(ngModel)]="model.title" #title="ngModel" [ngClass]="{ 'is-invalid': f.submitted && title.invalid }" required>
+                <option value=""></option>
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Miss">Miss</option>
+                <option value="Ms">Ms</option>
+            </select>
+            <div *ngIf="f.submitted && title.invalid" class="invalid-feedback">
+                <div *ngIf="title.errors.required">Title is required</div>
+            </div>
+        </div>
+        <div class="form-group col-5">
+            <label>First Name</label>
+            <input form="name" type="text" name="firstName" class="form-control" [(ngModel)]="model.firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required>
+            <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+                <div *ngIf="firstName.errors.required">First Name is required</div>
+            </div>
+        </div>
+        <div class="form-group col-5">
+            <label>Last Name</label>
+            <input form="name" type="text" name="lastName" class="form-control" [(ngModel)]="model.lastName" #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required>
+            <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
+                <div *ngIf="lastName.errors.required">Last Name is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input form="name" type="text" name="email" class="form-control" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email>
+        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+            <div *ngIf="email.errors.required">Email is required</div>
+            <div *ngIf="email.errors.email">Email must be a valid email address</div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Password</label>
+            <input form="name" type="password" name="password" class="form-control" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required minlength="6">
+            <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                <div *ngIf="password.errors.required">Password is required</div>
+                <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Confirm Password</label>
+            <input form="name" type="password" name="confirmPassword" class="form-control" [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel" [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.invalid }" required>
+            <div *ngIf="f.submitted && confirmPassword.invalid" class="invalid-feedback">
+                <div *ngIf="confirmPassword.errors.required">Confirm Password is required</div>
+                <div *ngIf="confirmPassword.errors.mustMatch">Passwords must match</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-check">
+        <input form="name" type="checkbox" name="acceptTerms" id="acceptTerms" class="form-check-input" [(ngModel)]="model.acceptTerms" #acceptTerms="ngModel" >
+        <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
+        <div *ngIf="f.submitted && acceptTerms.invalid" class="invalid-feedback">Accept Ts & Cs is required</div>
+    </div>
+    <button form="name" [disabled]="f.invalid" class="btn btn-primary mr-1">Register</button>
+    <button form="name" class="btn btn-secondary" type="reset">Cancel</button>
+</tr> -->
+

@@ -24,12 +24,15 @@ export class ItemsComponent implements OnInit {
     this.itemsService.listAllItems().subscribe(items => this.items = items);
   }
 
-  deleteItem(item: Item) {
+  deleteItem(item: Item): void {
     this.itemsService.deleteItem(item).subscribe(() => {this.listAllItems(); });
   }
 
-  edit(index: number) {
+  edit(index: number): void {
     console.log('I was remembered');
+  }
+  tryMe() {
+    console.log('Event was transmitted and intercepeted successfully');
   }
 
 }

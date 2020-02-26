@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbTypeaheadModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -28,6 +29,7 @@ import { ItemFormComponent } from './item-form/item-form.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    NgbTypeaheadModule
     // MatProgressSpinner
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}],
