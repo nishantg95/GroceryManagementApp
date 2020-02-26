@@ -56,12 +56,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr data-ng-repeat="i in ctrl.repoItems">
-              <td data-ng-bind="i.rId"></td>
-              <td data-ng-bind="i.rName"></td>
-              <td data-ng-bind="i.rFridgeDate"></td>
-              <td data-ng-bind="i.rFreezeDate"></td>
-              <td data-ng-bind="i.rPantryDate"></td>
+            <tr *ngFor="let repoItem of repoItems; let i = index" id="repo_item_{{i}}">
+              <td>{{repoItem.rId}}</td>
+              <td>{{repoItem.rName}}</td>
+              <td>{{repoItem.rFridgeDate}}</td>
+              <td>{{repoItem.rFreezeDate}}</td>
+              <td>{{repoItem.rPantryDate}}</td>
             </tr>
 
           </tbody>

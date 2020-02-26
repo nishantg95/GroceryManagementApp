@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RepoItem } from '../repo-item';
+import { RepoItemsService } from '../repo-items.service';
 
 @Component({
   selector: 'app-repo-items',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RepoItemsComponent implements OnInit {
 
-  constructor() { }
+  repoItems: RepoItem[];
+
+  constructor(private repoItemsService: RepoItemsService) {
+  }
 
   ngOnInit(): void {
+    this.listAllRepoItems();
+  }
+
+  listAllRepoItems(): void {
+    this.repoItemsService.listAllRepoItems().subscribe(repoItemsResponse => this.repoItems = repoItemsResponse);
   }
 
 }
