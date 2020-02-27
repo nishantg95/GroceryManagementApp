@@ -14,6 +14,7 @@ import { ItemsComponent } from './items/items.component';
 import { RepoItemsComponent } from './repo-items/repo-items.component';
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { ItemFormComponent } from './item-form/item-form.component';
+import { RepoFormComponent } from './repo-form/repo-form.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ItemFormComponent } from './item-form/item-form.component';
     DashboardComponent,
     ItemsComponent,
     RepoItemsComponent,
-    ItemFormComponent
+    ItemFormComponent,
+    RepoFormComponent
   ],
   imports: [
     BrowserModule,

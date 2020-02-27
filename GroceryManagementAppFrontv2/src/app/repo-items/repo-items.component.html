@@ -3,12 +3,12 @@
     <h3>Admin Panel</h3>
   </div>
   <div class="row justify-content-center">
-    <div class="col-auto p-3" ng-if="'${repoItem.rName}'!=''"
+   <!-- <div class="col-auto p-3" ng-if="'${repoItem.rName}'!=''"
       id="syncFormResult">
       <h6>Added following item to the Repo</h6>
       <table id="syncFormResultTable"
         class="table-sm table-borderless table-responsive .w-auto">
-        <!-- <tr>
+        <tr>
           <td>Item Name :</td>
           <td>${repoItem.rName}</td>
         </tr>
@@ -23,9 +23,9 @@
         <tr>
           <td>Freezer Longevity:</td>
           <td>${repoItem.rFreezeDate}</td>
-        </tr> -->
+        </tr>
       </table>
-    </div>
+    </div>-->
     <div class="panel">
       <div class="tablecontainer p-3">
         <table data-ng-controller="RepoItemController as ctrl"
@@ -37,8 +37,7 @@
                 <h3>Manage Repo Items</h3>
               </div>
               <div class="col col-xs-8 text-right">
-                <button id="addRepoItem"
-                  onclick="window.location.href = 'addRepoItemForm';"
+                <button id="addRepoItem" routerLink="../addRepoItemForm"
                   class="btn btn-success" data-toggle="tooltip"
                   data-placement="right" title="Add new item to repo">
                   <i class="fas fa-plus"></i>
