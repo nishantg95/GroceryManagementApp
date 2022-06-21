@@ -19,7 +19,7 @@
 		<standard.version>1.1.2</standard.version>
 		<javax.validation.version>2.0.1.Final</javax.validation.version>
 		<hibernate.version>5.1.0.Final</hibernate.version>     <!--Newer versions 5.4.X available -->
-		<mysql.connector.version>8.0.18</mysql.connector.version>
+		<mysql.connector.version>8.0.28</mysql.connector.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<log4j.version>2.13.0</log4j.version>  
